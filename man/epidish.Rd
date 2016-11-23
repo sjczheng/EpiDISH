@@ -34,9 +34,9 @@ a reference-based function to infer the proportions of a priori known cell subty
 \examples{
   #  library(EpiDISH)
   #  data(centDHSbloodDMC)
-  #  InferWeights.m <- epidish(avdata.m, centDHSbloodDMC.m, method = "RPC) 
+  #  out.l <- epidish(avdata.m, centDHSbloodDMC.m, method = "RPC") 
+  #  estF.m <- out.l$estF
   ## avdata.m is from samples you would like to infer weights of cell subtypes
-
-
+  ## estF.m is the inferred fractions
 }
 
