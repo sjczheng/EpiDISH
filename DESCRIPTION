@@ -1,8 +1,8 @@
 Package: EpiDISH
 Title: Epigenetic Dissection of Intra-Sample-Heterogeneity
-Version: 0.1.0
+Version: 0.1.1
 Description: EpiDISH is a R package to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC, Cibersort (CBS), Constrained Projection (CP)), as determined by user.
-Date: 2016-09-16
+Date: 2016-11-23
 Author: Andrew E Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie Charles Zheng<shijieczheng@gmail.com>
 Maintainer: Shijie Charles Zheng<shijieczheng@gmail.com>
 Depends: R (>= 3.0), Biobase, MASS, e1071, quadprog
@@ -10,5 +10,5 @@ Suggests: roxygen2 (>= 4.0.1)
 License: GPL-2
 LazyData: true
 NeedsCompilation: no
-Packaged: 2016-09-16 22:49:31 UTC; Charles
+Packaged: 2016-11-23 08:49:31 UTC; Charles
 RoxygenNote: 5.0.1
