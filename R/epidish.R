@@ -57,7 +57,6 @@ epidish <- function(avdata.m,ref.m,method=c("RPC","CBS","CP"),maxit=50,nu.v=c(0.
 ### Reference-based methods
 
 ### RPC
-#' @export
 DoRPC <- function(avdata.m,ref.m,maxit){
     require(MASS);
     map.idx <- match(rownames(ref.m),rownames(avdata.m));
@@ -83,7 +82,7 @@ DoRPC <- function(avdata.m,ref.m,maxit){
 
 
 ###  CIBERSORT
-#' @export
+
 DoCBS <- function(avdata.m,ref.m,nu.v=c(0.25,0.5,0.75)){
 
     require(e1071);
@@ -131,7 +130,6 @@ DoCBS <- function(avdata.m,ref.m,nu.v=c(0.25,0.5,0.75)){
 }
 
 ### Houseman CP
-#' @export
 DoCP <- function(avdata.m,ref.m){
 
 require(quadprog);
@@ -147,12 +145,12 @@ for(j in 1:nCT){
 
 ### define constraints
 A.m <- matrix(0,nrow=nCT+1,ncol=nCT);
-A.m[1,] <- 1;
+A.m[1,] <- -1;
 for(i in 1:nCT){
  A.m[1+i,i] <- 1;
 }
 A.m <- t(A.m);
-b0.v <- c(1,rep(0,nCT));
+b0.v <- c(-1,rep(0,nCT));
 
 ### define d-vector and solve for each sample
 nS <- ncol(avdata.m);
@@ -165,7 +163,7 @@ rep.idx <- which(is.na(map.idx)==FALSE);
 for(s in 1:nS){
  tmp.v <- avdata.m[,s];
  d.v <- as.vector(2*matrix(tmp.v[map.idx[rep.idx]],nrow=1) %*% ref.m[rep.idx,]);
- qp.o <- solve.QP(D,d.v,A.m,b0.v,meq=1);
+ qp.o <- solve.QP(D,d.v,A.m,b0.v,meq=0);
  westQP.m[s,] <- qp.o$sol;
  print(s);
 }
