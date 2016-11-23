@@ -31,9 +31,10 @@
 #' @examples 
 #'   #  library(EpiDISH)
 #'   #  data(centDHSbloodDMC)
-#'   #  InferWeights.m <- epidish(avdata.m, centDHSbloodDMC.m, method = "RPC) 
+#'   #  out.l <- epidish(avdata.m, centDHSbloodDMC.m, method = "RPC") 
+#'   #  estF.m <- out.l$estF
 #'   ## avdata.m is from samples you would like to infer weights of cell subtypes
-#' 
+#'   ## estF.m is the inferred fractions
 #' @export
 
 epidish <- function(avdata.m,ref.m,method=c("RPC","CBS","CP"),maxit=50,nu.v=c(0.25,0.5,0.75)){
