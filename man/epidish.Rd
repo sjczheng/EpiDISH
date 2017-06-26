@@ -5,38 +5,59 @@
 \title{Epigenetic Dissection of Intra-Sample-Heterogeneity}
 \usage{
 epidish(avdata.m, ref.m, method = c("RPC", "CBS", "CP"), maxit = 50,
-  nu.v = c(0.25, 0.5, 0.75))
+  nu.v = c(0.25, 0.5, 0.75), constraint = "inequality")
 }
 \arguments{
-\item{avdata.m}{a data matrix with rows labeling the molecular features (should use same ID as in cent.m) and columns labeling samples (e.g. primary tumour specimens). No missing values are allowed and all values should be positive or zero. In the case of DNA methylation, these are beta-values.}
+\item{avdata.m}{A data matrix with rows labeling the molecular features (should use same ID as in cent.m) and columns labeling samples (e.g. primary tumour specimens). No missing values are allowed and all values should be positive or zero. In the case of DNA methylation, these are beta-values.}
 
-\item{ref.m}{a matrix of reference "centroids", i.e. representative molecular profiles, for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) and columns label the cell-type. IDs need to be provided as rownames and colnames, respectively. No missing values are allowed, and all values in this matrix should be positive or zero. For DNAm data, values should be beta-values.}
+\item{ref.m}{A matrix of reference "centroids", i.e. representative molecular profiles, for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) and columns label the cell-type. IDs need to be provided as rownames and colnames, respectively. No missing values are allowed, and all values in this matrix should be positive or zero. For DNAm data, values should be beta-values.}
 
-\item{method}{chioce of a reference-based method ("RPC","CBS","CP")}
+\item{method}{Chioce of a reference-based method ("RPC","CBS","CP")}
+
+\item{maxit}{Used in RPC mode, the limit on the number of IWLS iterations}
+
+\item{nu.v}{This is only used for CBS mode. It is a vector of several nv values. nu is parameter needed for nu-classification, nu-regression, and one-classification in svm}
+
+\item{constraint}{For CP mode, you can choose either of "inequality" or "equality" normalization constraint. The default is "inequality" (i.e sum of weights adds to a number less or equal than 1), which was implemented in Houseman et al (2012).}
 }
 \value{
 CP-mode
-a list with the following entries: estF: the estimated cell fraction matrix; ref: the reference centroid matrix used; dataREF: the input data matrix over the probes defined in the reference matrix
+A list with the following entries: estF: the estimated cell fraction matrix; ref: the reference centroid matrix used; dataREF: the input data matrix over the probes defined in the reference matrix
 
 CBS-mode
-a list with the following entries: estF: the estimated cell fraction matrix; nu: a vector of "best" nu-parameter for each sample; 
+A list with the following entries: estF: the estimated cell fraction matrix; nu: a vector of "best" nu-parameter for each sample; 
 ref: the reference centroid matrix used;
 dataREF: the input data matrix over the probes defined in the reference matrix
 
 RPC-mode
-### a list with the following entries: estF: the estimated cell fraction matrix;
+### A list with the following entries: estF: the estimated cell fraction matrix;
 ref: the reference centroid matrix used; 
 dataREF: the input data matrix over the probes defined in the reference matrix
 }
 \description{
-a reference-based function to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC, Cibersort (CBS), Constrained Projection (CP)), as determined by user.
+A reference-based function to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC, Cibersort (CBS), Constrained Projection (CP)), as determined by user.
 }
 \examples{
   #  library(EpiDISH)
-  #  data(centDHSbloodDMC)
-  #  out.l <- epidish(avdata.m, centDHSbloodDMC.m, method = "RPC") 
+  #  data(centDHSbloodDMC.m)
+  #  out.l <- epidish(avdata.m, centDHSbloodDMC.m[,1:6], method = "RPC") 
   #  estF.m <- out.l$estF
   ## avdata.m is from samples you would like to infer weights of cell subtypes
   ## estF.m is the inferred fractions
 }
+\references{
+Teschendorff AE, Breeze CE, Zheng SC, Beck S. 
+\emph{A comparison of reference-based algorithms for correcting cell-type heterogeneity in Epigenome-Wide Association Studies.}
+BMC Bioinformatics (2017) 18: 105.
+doi:\href{https://doi.org/10.1186/s12859-017-1511-5}{10.1186/s12859-017-1511-5}.
 
+Houseman EA, Accomando WP, Koestler DC, Christensen BC, Marsit CJ, Nelson HH, Wiencke JK, Kelsey KT. 
+\emph{DNA methylation arrays as surrogate measures of cell mixture distribution.} 
+BMC Bioinformatics (2012) 13: 86.
+doi:\href{https://doi.org/10.1186/1471-2105-13-86}{10.1186/1471-2105-13-86}.
+
+Newman AM, Liu CL, Green MR, Gentles AJ, Feng W, Xu Y, Hoang CD, Diehn M, Alizadeh AA. 
+\emph{Robust enumeration of cell subsets from tissue expression profiles.}
+Nat Methods (2015) 12: 453-457.
+doi:\href{https://doi.org/10.1038/nmeth.3337}{10.1038/nmeth.3337}.
+}
