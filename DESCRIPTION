@@ -5,7 +5,7 @@ Description: EpiDISH is a R package to infer the proportions of a priori known c
 Date: 2017-06-26
 Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie C. Zheng<shijieczheng@gmail.com>
 Maintainer: Shijie Charles Zheng<shijieczheng@gmail.com>
-Depends: R (>= 3.0), Biobase, MASS, e1071, quadprog
+Depends: R (>= 3.4), Biobase, MASS, e1071, quadprog
 Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL-2
