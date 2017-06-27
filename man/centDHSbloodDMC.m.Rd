@@ -9,7 +9,7 @@
 data(centDHSbloodDMC.m)
 }
 \description{
-A dataset containing wole blood reference of 333 tsDHS-DMCs 
+A dataset containing whole blood reference of 333 tsDHS-DMCs 
 and 8 blood cell subtypes:
 }
 \details{

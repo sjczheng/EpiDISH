@@ -81,9 +81,9 @@
 #' 
 #' @examples 
 #' data(centDHSbloodDMC.m)
-#' ##  out.l <- epidish(avdata.m, centDHSbloodDMC.m[,1:6], method = "RPC")
-#' # refer to vignettes for example
-#' ##  estF.m <- out.l$estF
+#' data(DummyBeta.m)
+#' out.l <- epidish(DummyBeta.m, centDHSbloodDMC.m[,1:6], method = "RPC")
+#' estF.m <- out.l$estF
 #' ## avdata.m is from samples you would like to infer weights of cell subtypes
 #' ## estF.m is the inferred proportions
 #' @export

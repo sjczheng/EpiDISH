@@ -23,26 +23,29 @@ For now, the package only includes one whole blood reference of 333 tsDHS-DMCs a
 
 Using **EpiDISH** is quite simple. Here we use a small Illumina HumanMethylation450 BeadChip blood dataset(n=2) on GEO as an example.
 
-First, we download the dataset with *getGEO* function in **GEOquery** package and extract beta value matrix.
+You can download the dataset with *getGEO* function in **GEOquery** package and extract the whole beta value matrix.
 
-```{r download, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
+```{r download, eval=F, echo=T, message=FALSE, warning=FALSE}
 require(GEOquery)
 require(Biobase)
 GSE80559 <- getGEO("GSE80559")
 beta.m <- exprs(GSE80559[[1]])
 ```
 
-Then, we load **EpiDISH** package and the whole blood reference dataset.
+To reduce the package size and running time, we randomly selected 1000 probes from the beta value matrix(we let 330 of the probes be overlapped with the blood reference we provide.). The resulted *DummyBeta.m* is stored in the package. 
+
+We load **EpiDISH** package, beta value matrix, and the whole blood reference dataset.
 ```{r load, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
 library(EpiDISH)
 data(centDHSbloodDMC.m)
+data(DummyBeta.m)
 ```
 
 Notice that *centDHSbloodDMC.m* has 8 columns. Granulocytes consist of Neutrophils and Eosinophils.
 So, we only want to inlcude 7 columns(i.e B-cells, CD4+ T-cells, CD8+ T-cells, NK-cells, Monocytes, Neutrophils and Eosinophils) or 6 columns(i.e B-cells, CD4+ T-cells, CD8+ T-cells, NK-cells, Monocytes and Granulocytes). We go ahead and use *epidish* function with *RPC* mode to infer the proportions.
 ```{r infer, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
 ref.m <- centDHSbloodDMC.m[,1:6]
-out.l <- epidish(beta.m, ref.m, method = "RPC") 
+out.l <- epidish(DummyBeta.m, ref.m, method = "RPC") 
 ```
 
 Then, we check the output list. *estF* is the estimated cell fraction matrix. *ref* is the reference centroid matrix used; and *dataREF* is the input data matrix over the probes defined in the reference matrix.
@@ -52,7 +55,7 @@ dim(out.l$ref)
 dim(out.l$dataREF)
 ```
 
-In this case, all 333 probes in the input reference matrix can be found in the inquiry matrix. So the *ref* is a $333*6$ matrix, while *dataREF* is a $333*2$ matrix. Sometime, in QC step, we might remove bad probes; consequently, not all probes in the reference can be found in inquiry data. By checking *ref* and *dataREF*, we can know the actul probes used to infer the proportions.
+In this case, 330 out of 333 probes in the input reference matrix can be found in the inquiry matrix. So the *ref* is a $330*6$ matrix, while *dataREF* is a $330*2$ matrix. In QC step, we might remove bad probes; consequently, not all probes in the reference can be found in inquiry data. By checking *ref* and *dataREF*, we can extract the probes used to infer the proportions. If most of the probes in the reference cannot be found, the estimated proportions might be compromised.
 
 
 # More info about different methods
