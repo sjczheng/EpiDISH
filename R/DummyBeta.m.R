@@ -6,7 +6,7 @@
 #' To reduce the data size, only 1000 probes are included
 #' 330 probes are overlapped with centDHSblood.m
 #' You can get the whole beta value matrix by
-#' \code{exprs(GEOquery::getGEO("GSE80559")[[1]])}
+#' \code{exprs(GEOquery::getGEO('GSE80559')[[1]])}
 #'
 #' \itemize{
 #'   \item beta value matrix of 1000 probes and 2 samples

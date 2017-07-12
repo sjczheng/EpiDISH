@@ -15,7 +15,7 @@ The tissue type is whole blood
 To reduce the data size, only 1000 probes are included
 330 probes are overlapped with centDHSblood.m
 You can get the whole beta value matrix by
-\code{exprs(GEOquery::getGEO("GSE80559")[[1]])}
+\code{exprs(GEOquery::getGEO('GSE80559')[[1]])}
 }
 \details{
 \itemize{

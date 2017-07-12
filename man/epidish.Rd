@@ -5,7 +5,7 @@
 \title{Epigenetic Dissection of Intra-Sample-Heterogeneity}
 \usage{
 epidish(avdata.m, ref.m, method = c("RPC", "CBS", "CP"), maxit = 50,
-  nu.v = c(0.25, 0.5, 0.75), constraint = "inequality")
+  nu.v = c(0.25, 0.5, 0.75), constraint = c("inequality", "equality"))
 }
 \arguments{
 \item{avdata.m}{A data matrix with rows labeling the molecular features (should use same ID 
@@ -13,14 +13,14 @@ as in cent.m) and columns labeling samples (e.g. primary tumour specimens).
 No missing values are allowed and all values should be positive or zero. 
 In the case of DNA methylation, these are beta-values.}
 
-\item{ref.m}{A matrix of reference "centroids", i.e. representative molecular profiles, 
+\item{ref.m}{A matrix of reference 'centroids', i.e. representative molecular profiles, 
 for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) 
 and columns label the cell-type. IDs need to be provided as rownames and 
 colnames, respectively. No missing values are allowed, and all values in 
 this matrix should be positive or zero. For DNAm data, values should be 
 beta-values.}
 
-\item{method}{Chioce of a reference-based method ("RPC","CBS","CP")}
+\item{method}{Chioce of a reference-based method ('RPC','CBS','CP')}
 
 \item{maxit}{Used in RPC mode, the limit on the number of IWLS iterations}
 
@@ -28,8 +28,8 @@ beta-values.}
 parameter needed for nu-classification, nu-regression, and 
 one-classification in svm}
 
-\item{constraint}{For CP mode, you can choose either of "inequality" or "equality" 
-normalization constraint. The default is "inequality" (i.e sum of weights 
+\item{constraint}{For CP mode, you can choose either of 'inequality' or 'equality' 
+normalization constraint. The default is 'inequality' (i.e sum of weights 
 adds to a number less or equal than 1), which was implemented in 
 Houseman et al (2012).}
 }
@@ -41,7 +41,7 @@ the probes defined in the reference matrix
 
 CBS-mode
 A list with the following entries: estF: the estimated cell fraction matrix; 
-nu: a vector of "best" nu-parameter for each sample; 
+nu: a vector of 'best' nu-parameter for each sample; 
 ref: the reference centroid matrix used;
 dataREF: the input data matrix over the probes defined in the reference 
 matrix
@@ -61,7 +61,7 @@ Cibersort (CBS), Constrained Projection (CP)), as determined by user.
 \examples{
 data(centDHSbloodDMC.m)
 data(DummyBeta.m)
-out.l <- epidish(DummyBeta.m, centDHSbloodDMC.m[,1:6], method = "RPC")
+out.l <- epidish(DummyBeta.m, centDHSbloodDMC.m[,1:6], method = 'RPC')
 estF.m <- out.l$estF
 ## avdata.m is from samples you would like to infer weights of cell subtypes
 ## estF.m is the inferred proportions
