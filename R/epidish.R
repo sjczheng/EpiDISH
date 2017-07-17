@@ -188,12 +188,9 @@ DoCP <- function(avdata.m, ref.m, constraint) {
     } else coe.v <- c(1, 1)
     
     ### define constraints
-    A.m <- matrix(0, nrow = nCT + 1, ncol = nCT)
-    A.m[1, ] <- coe.v[1]
-    for (i in seq_len(nCT)) {
-        A.m[1 + i, i] <- 1
-    }
-    A.m <- t(A.m)
+    A.m <- matrix(0, nrow=nCT, ncol=nCT)
+    diag(A.m) <- rep(1, nCT)
+    A.m <- cbind(rep(coe.v[1], nCT), A.m)
     b0.v <- c(coe.v[1], rep(0, nCT))
     
     ### define d-vector and solve for each sample
