@@ -53,7 +53,7 @@
 #' matrix
 #' 
 #' @return RPC-mode
-#' ### A list with the following entries: estF: the estimated cell fraction 
+#' A list with the following entries: estF: the estimated cell fraction 
 #' matrix; ref: the reference centroid matrix used; 
 #' dataREF: the input data matrix over the probes defined in the reference 
 #' matrix
