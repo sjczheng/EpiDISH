@@ -1,0 +1,80 @@
+
+citHeader("Please cite the relevant papers for individual methods and the EpiDISH paper for the whole package.")
+
+citEntry(
+  entry="article",	
+  author = c(
+             person(c("Andrew", "E."), "Teschendorff"),
+             person(c("Charles", "E."), "Breeze"),
+             person(c("Shijie", "C."), "Zheng"),
+             person("Stephan", "Beck")
+           ),
+  title="A comparison of reference-based algorithms for correcting cell-type heterogeneity in Epigenome-Wide Association Studies",
+  journal="BMC bioinformatics",
+  volume=18,
+  number=1,
+  pages=105,
+  year=2017,
+  
+  textVersion="Teschendorff AE, Breeze CE, Zheng SC, Beck S. 2017. A comparison of reference-based algorithms for correcting cell-type heterogeneity in Epigenome-Wide Association Studies. BMC Bioinformatics 18: 105."
+)
+
+citEntry(
+  entry="article",	
+  author = c(person(c("Eugene", "A."), "Houseman"),
+                      person(c("William", "P."), "Accomando"),
+                      person(c("Devin", "C."), "Koestler"),
+                      person(c("Brock", "C."), "Christensen"),
+                      person(c("Carmen", "J."), "Marsit"),
+                      person(c("Heather", "H."), "Nelson"),
+                      person(c("John", "K."), "Wiencke"),
+                      person(c("Karl", "T."), "Kelsey")),
+  title="DNA methylation arrays as surrogate measures of cell mixture distribution",
+  journal="BMC bioinformatics",
+  volume=13,
+  number=1,
+  pages=86,
+  year=2012,
+  
+  textVersion="Houseman EA, Accomando WP, Koestler DC, Christensen BC, Marsit CJ, Nelson HH, Wiencke JK, Kelsey KT. 2012. DNA methylation arrays as surrogate measures of cell mixture distribution. BMC Bioinformatics 13: 86."
+)
+
+
+citEntry(
+  entry="article",	
+  author = c(person(given = c("Aaron", "M."), family = "Newman"),
+                      person(given = c("Chih", "L."), family = "Liu"),
+                      person(given = c("Michael", "R."), family = "Green"),
+                      person(given = c("Andrew", "J."), family = "Gentles"),
+                      person(given = c("Weiguo"), family = "Feng"),
+                      person(given = c("Yue"), family = "Xu"),
+                      person(given = c("Chuong", "D."), family = "Hoang"),
+                      person(given = c("Maximilian"), family = "Diehn"),
+                      person(given = c("Ash", "A."), family = "Alizadeh")),
+  title="Robust enumeration of cell subsets from tissue expression profiles",
+  journal="Nature Methods",
+  volume=12,
+  number=5,
+  pages=453,
+  year=2015,
+  
+  textVersion="Newman AM, Liu CL, Green MR, Gentles AJ, Feng W, Xu Y, Hoang CD, Diehn M, Alizadeh AA. 2015. Robust enumeration of cell subsets from tissue expression profiles. Nat Methods 12: 453-457."
+)
+           
+citEntry(
+  entry="article",	
+  author = c(
+             person(c("Andrew", "E."), "Teschendorff"),
+             person(c("Shijie", "C."), "Zheng")
+           ),
+  title="Cell-type deconvolution in epigenome-wide association studies: a review and recommendations",
+  journal="Epigenomics",
+  volume=9,
+  number=5,
+  pages=757,
+  year=2017,
+  
+  textVersion="Teschendorff AE, Zheng SC. 2017. Cell-type deconvolution in epigenome-wide association studies: a review and recommendations. Epigenomics 9: 757-768."
+)
+
+
