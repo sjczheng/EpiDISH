@@ -4,6 +4,43 @@ citHeader("Please cite the relevant papers for individual methods and the EpiDIS
 citEntry(
   entry="article",	
   author = c(
+             person(c("Shijie", "C."), "Zheng"),
+             person("Stephan", "Beck"),
+             person(c("Andrew", "E."), "Teschendorff")
+           ),
+  title="Identification of differentially methylated cell-types in Epigenome-Wide Association Studies",
+  journal="In preparation",
+  year=2018,
+  
+  textVersion="Zheng SC, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. In preparation."
+)
+
+citEntry(
+  entry="article",	
+  author = c(
+             person(c("Shijie", "C."), "Zheng"),
+             person(c("Amy", "P."), "Webster"),
+             person(c("Danyue"), "Dong"),
+             person(c("Andy"), "Feber"),
+             person(c("David", "G."), "Graham"),
+             person(c("Roisin"), "Sullivan"),
+             person(c("Sarah"), "Jevons"),
+             person(c("Laurence", "B."), "Lovat"),
+             person("Stephan", "Beck"),
+             person("Martin", "Widschwendter"),
+             person(c("Andrew", "E."), "Teschendorff")
+           ),
+  title="A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix",
+  journal="Epigenomics",
+  year=2018,
+  volume= "In Press",
+  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics In Press."
+)
+
+
+citEntry(
+  entry="article",	
+  author = c(
              person(c("Andrew", "E."), "Teschendorff"),
              person(c("Charles", "E."), "Breeze"),
              person(c("Shijie", "C."), "Zheng"),

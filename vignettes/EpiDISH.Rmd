@@ -1,51 +1,38 @@
 ---
-title: "EpiDISH - Epigenetic Dissection of Intra-Sample-Heterogeneity - R package"
-author: "Andrew E. Teschendorff, Shijie C. Zheng"
+title: "EpiDISH - Epigenetic Dissection of Intra-Sample-Heterogeneity"
+author: "Shijie C. Zheng, Andrew E. Teschendorff"
 date: "`r Sys.Date()`"
 package: "`r pkg_ver('EpiDISH')`"
 output:
   BiocStyle::html_document
 bibliography: EpiDISH.bib
 vignette: >
-  %\VignetteIndexEntry{Epigenetic Dissection of Intra-Sample-Heterogeneity - R package}
+  %\VignetteIndexEntry{Epigenetic Dissection of Intra-Sample-Heterogeneity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
 
-The **EpiDISH** package provides tools to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC[@EpiDISH], Cibersort (CBS)[@CBS], Constrained Projection (CP)[@CP]), as determined by user.
+The **EpiDISH** package provides tools to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC[@EpiDISH], Cibersort (CBS)[@CBS], Constrained Projection (CP)[@CP]), as determined by user. Besides, we also provide a method - CellDMC that allows the identification of differentially methylated cell-types and their directionality of change.
 
-For now, the package only includes one whole blood reference of 333 tsDHS-DMCs and 8 blood cell subtypes(B-cells, CD4+ T-cells, CD8+ T-cells, NK-cells, Monocytes, Neutrophils, Eosinophils, and Granulocytes. Note that Granulocytes consist of Neutrophils and Eosinophils.) described in [@EpiDISH]. This referecen dataset was based on 450k DNAm array; however, it could be directly used on both of 450k and EPIC array data. This package is under development and will offer reference-based inference for different tissue types. We will also include more algorithms in the future.
+For now, the package contains 4 references, including two blood subtypes reference, as well as one reference with epithelial cells, fibroblasts, and total immune cells, and one reference with epithelial cells, fibroblasts, fat cells, and total immune cells, described in [@EpiDISH] and [@HEpiDISH].
 
 
-# How to use **EpiDISH** package
+# How to estimte cell-type fractions using DNAm data
 
-Using **EpiDISH** is quite simple. Here we use a small Illumina HumanMethylation450 BeadChip blood dataset(n=2) on GEO as an example.
+To show an example here, we use a dummy beta value matrix *DummyBeta.m*, which contains 2000 CpGs and 10 samples. The *DummyBeta.m* is stored in the package. 
 
-You can download the dataset with *getGEO* function in **GEOquery** package and extract the whole beta value matrix.
-
-```{r download, eval=F, echo=T, message=FALSE, warning=FALSE}
-require(GEOquery)
-require(Biobase)
-GSE80559 <- getGEO("GSE80559")
-beta.m <- exprs(GSE80559[[1]])
-```
-
-To reduce the package size and running time, we randomly selected 1000 probes from the beta value matrix(we let 330 of the probes be overlapped with the blood reference we provide.). The resulted *DummyBeta.m* is stored in the package. 
-
-We load **EpiDISH** package, beta value matrix, and the whole blood reference dataset.
+We load **EpiDISH** package, beta value matrix, and the EpiFibIC reference.
 ```{r load, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
 library(EpiDISH)
-data(centDHSbloodDMC.m)
+data(centEpiFibIC.m)
 data(DummyBeta.m)
 ```
 
-Notice that *centDHSbloodDMC.m* has 8 columns. Granulocytes consist of Neutrophils and Eosinophils.
-So, we only want to inlcude 7 columns(i.e B-cells, CD4+ T-cells, CD8+ T-cells, NK-cells, Monocytes, Neutrophils and Eosinophils) or 6 columns(i.e B-cells, CD4+ T-cells, CD8+ T-cells, NK-cells, Monocytes and Granulocytes). We go ahead and use *epidish* function with *RPC* mode to infer the proportions.
+Notice that *centEpiFibIC.m* has 3 columns, with columns names EPi, Fib and IC. We go ahead and use *epidish* function with *RPC* mode to infer the fractions.
 ```{r infer, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
-ref.m <- centDHSbloodDMC.m[,1:6]
-out.l <- epidish(DummyBeta.m, ref.m, method = "RPC") 
+out.l <- epidish(beta.m = DummyBeta.m, ref.m = centEpiFibIC.m, method = "RPC") 
 ```
 
 Then, we check the output list. *estF* is the estimated cell fraction matrix. *ref* is the reference centroid matrix used; and *dataREF* is the input data matrix over the probes defined in the reference matrix.
@@ -55,11 +42,43 @@ dim(out.l$ref)
 dim(out.l$dataREF)
 ```
 
-In this case, 330 out of 333 probes in the input reference matrix can be found in the inquiry matrix. So the *ref* is a $330*6$ matrix, while *dataREF* is a $330*2$ matrix. In QC step, we might remove bad probes; consequently, not all probes in the reference can be found in inquiry data. By checking *ref* and *dataREF*, we can extract the probes used to infer the proportions. If most of the probes in the reference cannot be found, the estimated proportions might be compromised.
+In quality control step, we might remove bad probes from all  probes on 450k or 850k array; consequently, not all probes in the reference can be found in inquiry data. By checking *ref* and *dataREF*, we can extract the probes used to infer the proportions. If most of the probes in the reference cannot be found, the estimated proportions might be compromised.
+
+# How to estimte cell-type fractions in a two-step framework
+HEpiDISH is a iterative hierarchical procedure of EpiDISH. HEpiDISH uses two distinct DNAm references, a primary reference for the estimation of several cell-types fractions, and a separate secondary non-overlapping DNAm reference for the estimation of underlying subtype fractions of one of the cell-type in the primary reference.
+![Fig1. HEpiDISH workflow](HEpiDISH.jpg) 
+In this example, the third cell-type in primary reference is total immune cells. We would like to know the fractions of immune cell subtypes. So we use a secondary reference, which contains 7 immnue cell subtypes, and tell **hepidish** function that the third column of primary reference is the total of secodnary reference.
+```{r hepidish, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
+data(centBloodSub.m)
+frac.m <- hepidish(beta.m = DummyBeta.m, ref1.m = centEpiFibIC.m, ref2.m = centBloodSub.m[,c(1, 2, 5)], h.CT.idx = 3, method = 'RPC')
+frac.m
+```
 
 
-# More info about different methods
+# More info about different methods for cell-type fractions estimation
 We compared CP and RPC in [@EpiDISH]. And we also have a review article[@review] which summarized all methods tackling cell heterogeneity for DNAm data. Refers to references section for more details.
+
+
+# How to identify differentially methylated cell-types and their directionality of change
+After estimate cell-type fractions, we can identify differentially methylated cell-types and their directionality of change using **CellDMC** [@CellDMC]function. We provide two modes of **CellDMC**. The workflow of basic **CellDMC** is shown below.
+![Fig2. Basic CellDMC workflow](basic.jpg)
+
+
+And the improved **CellDMC**(which is the default mode of **CellDMC** function)
+![Fig3. Improved CellDMC workflow](improved.jpg)
+
+```{r celldmc, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
+pheno.v <- rep(c(0, 1), each = 5)
+celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m)
+```
+
+The DMCTs prediction is given(pls note this is faked data. The sample size is too small to find DMCTs.):
+```{r dmct, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
+head(celldmc.o$dmct)
+```
+
+More info, pls refer to help page of **CellDMC**.
+
 
 # Sessioninfo
 

@@ -1,19 +1,26 @@
 Package: EpiDISH
 Title: Epigenetic Dissection of Intra-Sample-Heterogeneity
-Version: 0.99.4
-Description: EpiDISH is a R package to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC, Cibersort (CBS), Constrained Projection (CP)), as determined by user.
-Date: 2017-06-26
-Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie C. Zheng<shijieczheng@gmail.com>
+Version: 2.0.1
+Description: EpiDISH is a R package to infer the proportions of a
+        priori known cell subtypes present in a sample representing a
+        mixture of such cell-types. And it also provides a method that allows 
+        the identification of differentially methylated cell-types and their 
+        directionality of change.
+Date: 2018-04-18
+Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie C.
+        Zheng<shijieczheng@gmail.com>
 Maintainer: Shijie Charles Zheng<shijieczheng@gmail.com>
 Depends: R (>= 3.4)
-Imports: MASS, e1071, quadprog
-Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase, testthat
+Imports: MASS, e1071, quadprog, parallel, zoo, stats, limma, dplyr
+Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase,
+        testthat
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: true
 NeedsCompilation: no
-Packaged: 2016-11-23 14:27:33 UTC; Charles
 RoxygenNote: 6.0.1
 URL: https://github.com/sjczheng/EpiDISH
 BugReports: https://github.com/sjczheng/EpiDISH/issues
-biocViews: DNAMethylation, MethylationArray, Epigenetics, DifferentialMethylation 
+biocViews: DNAMethylation, MethylationArray, Epigenetics,
+        DifferentialMethylation
+

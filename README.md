@@ -1,1 +1,1 @@
-vignettes/EpiDISH.Rmd
+./vignettes/EpiDISH.Rmd

@@ -3,6 +3,13 @@
 \encoding{UTF-8}
 
 
+\section{Version 2.0.1}{
+  \itemize{
+    \item Add CellDMC and hepidish functions.
+  }
+}
+
+
 \section{Version 0.99.0}{
   \itemize{
     \item Initial submission to Bioconductor.
