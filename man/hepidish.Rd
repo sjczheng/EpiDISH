@@ -59,7 +59,8 @@ the primary reference.
 data(centEpiFibIC.m)
 data(centBloodSub.m)
 data(DummyBeta.m)
-frac.m <- hepidish(beta.m = DummyBeta.m, ref1.m = centEpiFibIC.m, ref2.m = centBloodSub.m, h.CT.idx = 3, method = 'RPC')
+frac.m <- hepidish(beta.m = DummyBeta.m, ref1.m = centEpiFibIC.m, 
+ref2.m = centBloodSub.m, h.CT.idx = 3, method = 'RPC')
 
 
 }
