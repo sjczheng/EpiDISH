@@ -6,14 +6,15 @@
 cell-types and their directionality of change}
 \usage{
 CellDMC(beta.m, pheno.v, frac.m, mode = c("improved", "basic"),
-  adjPMethod = "fdr", adjPThresh = 0.05, DiffThresh = 0.1, mc.cores = 1)
+  pheno.class = c("bi", "continuous"), adjPMethod = "fdr",
+  adjPThresh = 0.05, DiffThresh = 0.1, mc.cores = 1)
 }
 \arguments{
 \item{beta.m}{A beta value matrix with rows labeling the CpGs and columns labeling samples. 
 This contains all CpGs, from which you want to find DMCTs.}
 
-\item{pheno.v}{A vector of phenotype. Each item has to be 0 or 1, with 1 labeling case and 
-0 labeling control.}
+\item{pheno.v}{A vector of phenotype. For binary phenotypes, each item has to be 0 or 1, 
+with 1 labeling case and 0 labeling control.}
 
 \item{frac.m}{A matrix contains fractions of each cell-type. Each row labels a sample, with 
 the same order of the columns in beta.m. Each column labels a cell-type. 
@@ -24,6 +25,9 @@ frac.m should be 1, and all values should be greater than 0 and less than 1.}
 improved' algorithm. \code{mode} can be either of 'improved' or 'basic', with 
 default as 'improved'. For more details, pls refer to the reference.}
 
+\item{pheno.class}{A string tell CellDMC the class of phenotypes, which can be either of 
+\code{bi}(for binary phenotypes) or \code{continuous}(for continuous phenotypes).}
+
 \item{adjPMethod}{A method to adjust p values. The method can be any of method accepted by 
 \code{\link{p.adjust}}.}
 
@@ -32,7 +36,7 @@ Adjusted p values less than this threshold will be picked.}
 
 \item{DiffThresh}{A DNAm diff threshold. The default is 0.1. For each cell-type, CpGs with 
 absolute DNAm change greater than this threshold will be treated as DMCTs. 
-Pls note that this threshold is only used in 'improved' mode.}
+Pls note that this threshold is only used in 'improved' mode for binary pheno.}
 
 \item{mc.cores}{The number of cores to use, i.e. at most how many child processes will be run 
 simultaneously. The defatul is 1, which means no parallelization.}
