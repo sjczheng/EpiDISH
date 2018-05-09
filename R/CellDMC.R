@@ -110,10 +110,11 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic"), phen
     if (pheno.class == "bi") {
       if (sum(pheno.v %in% c(0, 1)) != length(pheno.v)) 
         stop("Pls code case as 1 and control as 0 in pheno.v. CellDMC only accepts binary phenotypes or continuous phenotypes for now.")
+      pheno.v <- factor(as.character(pheno.v), levels = as.character(c(0, 1)))
     }
 
     
-    pheno.v <- factor(as.character(pheno.v), levels = as.character(c(0, 1)))
+    
     
     if (!mode %in% c("improved", "basic")) 
         stop("Input a valid mode!")
@@ -128,6 +129,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic"), phen
                                   adjPMethod = adjPMethod, adjPThresh = adjPThresh, DiffThresh = DiffThresh, 
                                   mc.cores = mc.cores)
       } else if (pheno.class == "continuous"){
+        print("con")
         out.o <- CellDMC.continuous(beta.m = beta.m, pheno.v = pheno.v, frac.m = frac.m, 
                                     adjPMethod = adjPMethod, adjPThresh = adjPThresh, 
                                     mc.cores = mc.cores)
