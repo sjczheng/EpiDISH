@@ -87,8 +87,8 @@
 #' out.l <- epidish(DummyBeta.m, centEpiFibIC.m, method = 'RPC')
 #' frac.m <- out.l$estF
 #' pheno.v <- factor(rep(c(0, 1), each = 5))
-#' celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m) # Pls note this is faked 
-#' beta value matrix
+#' celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m) 
+#' # Pls note this is faked beta value matrix
 #' 
 #' 
 #' @import zoo
