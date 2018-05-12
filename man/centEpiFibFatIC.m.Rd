@@ -24,6 +24,6 @@ epithelial cells, fibroblasts, fat cells, and total immune cells.
 Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, 
 Beck S, Widschwendter M, Teschendorff AE
 \emph{A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix.}
-Epigenomics (2018) In Press.
+Epigenomics (2018) Epub ahead of print.
 }
 \keyword{datasets}

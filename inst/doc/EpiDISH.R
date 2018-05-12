@@ -17,7 +17,7 @@ frac.m <- hepidish(beta.m = DummyBeta.m, ref1.m = centEpiFibIC.m, ref2.m = centB
 frac.m
 
 ## ----celldmc, eval=TRUE, echo=T, message=FALSE, warning=FALSE--------------
-pheno.v <- rep(c(0, 1), each = 5)
+pheno.v <- factor(rep(c(0, 1), each = 5))
 celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m)
 
 ## ----dmct, eval=TRUE, echo=T, message=FALSE, warning=FALSE-----------------

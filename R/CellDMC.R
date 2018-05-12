@@ -15,8 +15,9 @@
 #' This contains all CpGs, from which you want to find DMCTs.
 #' 
 #' @param pheno.v
-#' A vector of phenotype. For binary phenotypes, each item has to be 0 or 1, 
-#' with 1 labeling case and 0 labeling control.
+#' A vector of phenotype. CellDMC can handle both of categorical and continuous/oderinal 
+#' phenotypes. For categorical phenotypes, you must input factors to make sure 
+#' you get the right results.
 #' 
 #' @param frac.m
 #' A matrix contains fractions of each cell-type. Each row labels a sample, with 
@@ -29,9 +30,6 @@
 #' improved' algorithm. \code{mode} can be either of 'improved' or 'basic', with 
 #' default as 'improved'. For more details, pls refer to the reference.
 #' 
-#' @param pheno.class
-#' A string tell CellDMC the class of phenotypes, which can be either of 
-#' \code{bi}(for binary phenotypes) or \code{continuous}(for continuous phenotypes).
 #' 
 #' @param adjPMethod
 #' A method to adjust p values. The method can be any of method accepted by 
@@ -41,10 +39,6 @@
 #' A numeric value, default as 0.05. This is used to call significant DMCTs. 
 #' Adjusted p values less than this threshold will be picked.
 #' 
-#' @param DiffThresh
-#' A DNAm diff threshold. The default is 0.1. For each cell-type, CpGs with 
-#' absolute DNAm change greater than this threshold will be treated as DMCTs. 
-#' Pls note that this threshold is only used in 'improved' mode for binary pheno.
 #' 
 #' @param mc.cores
 #' The number of cores to use, i.e. at most how many child processes will be run 
@@ -84,7 +78,7 @@
 #' data(DummyBeta.m)
 #' out.l <- epidish(DummyBeta.m, centEpiFibIC.m, method = 'RPC')
 #' frac.m <- out.l$estF
-#' pheno.v <- rep(c(0, 1), each = 5)
+#' pheno.v <- factor(rep(c(0, 1), each = 5))
 #' celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m) # Pls note this is faked beta value matrix
 #' 
 #' 
@@ -96,10 +90,9 @@
 #' 
 #' @export
 #' 
-CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic"), pheno.class = c("bi", "continuous") ,adjPMethod = "fdr", 
-    adjPThresh = 0.05, DiffThresh = 0.1, mc.cores = 1) {
+CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic") ,adjPMethod = "fdr", 
+    adjPThresh = 0.05,  mc.cores = 1) {
     mode <- match.arg(mode)
-    pheno.class <- match.arg(pheno.class)
     ### check input
     if (ncol(beta.m) != length(pheno.v)) 
         stop("Number of columns of beta.m should equal to length of pheno.v!")
@@ -107,33 +100,18 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic"), phen
         stop("Number of columns of beta.m should equal to number of rows of frac.m!")
     if (length(colnames(frac.m)) != ncol(frac.m)) 
         stop("Pls assign correct name of cell-type to frac.m")
-    if (pheno.class == "bi") {
-      if (sum(pheno.v %in% c(0, 1)) != length(pheno.v)) 
-        stop("Pls code case as 1 and control as 0 in pheno.v. CellDMC only accepts binary phenotypes or continuous phenotypes for now.")
-      pheno.v <- factor(as.character(pheno.v), levels = as.character(c(0, 1)))
-    }
-
-    
-    
+    if (!is.factor(pheno.v)) 
+      message("pheno.v is not factor. Treating as continuous variables. Input factos for categorical phenotypes.")
     
     if (!mode %in% c("improved", "basic")) 
         stop("Input a valid mode!")
-    if (!pheno.class %in% c("bi", "continuous")) 
-      stop("Input a valid pheno.class!")
     oldw <- getOption("warn")
     options(warn = -1)
     sink("/dev/null")
     if (mode == "improved") {
-      if (pheno.class == "bi") {
-        out.o <- CellDMC.improved(beta.m = beta.m, pheno.v = pheno.v, frac.m = frac.m, 
-                                  adjPMethod = adjPMethod, adjPThresh = adjPThresh, DiffThresh = DiffThresh, 
-                                  mc.cores = mc.cores)
-      } else if (pheno.class == "continuous"){
-        print("con")
-        out.o <- CellDMC.continuous(beta.m = beta.m, pheno.v = pheno.v, frac.m = frac.m, 
-                                    adjPMethod = adjPMethod, adjPThresh = adjPThresh, 
-                                    mc.cores = mc.cores)
-      }
+      out.o <- CellDMC.improved(beta.m = beta.m, pheno.v = pheno.v, frac.m = frac.m, 
+                                adjPMethod = adjPMethod, adjPThresh = adjPThresh, 
+                                mc.cores = mc.cores)
         
     } else if (mode == "basic") {
         out.o <- CellDMC.basic(beta.m = beta.m, pheno.v = pheno.v, frac.m = frac.m, 
@@ -148,27 +126,17 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic"), phen
 
 
 CellDMC.improved <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05, 
-    DiffThresh = 0.1, mc.cores = 1) {
+    mc.cores = 1) {
     
-    ### Fit NoInt model
-    design0 <- cbind(model.matrix(~type, data = data.frame(type = pheno.v)), frac.m[, 
-        seq_len(ncol(frac.m))[-1]])
-    fit0 <- eBayes(lmFit(beta.m, design = design0))
-    m0.adjP <- topTable(fit0, coef = 2, number = Inf, sort.by = "none", adjust.method = adjPMethod)$adj.P.Val
     
     ### Fit Int models for each cell-type
     tmp.ld <- mclapply(seq_len(ncol(frac.m)), function(j) {
-        design1 <- cbind(model.matrix(~type + type:frac, data = data.frame(type = pheno.v, 
+        design1 <- cbind(model.matrix(~pheno + pheno:frac, data = data.frame(pheno = pheno.v, 
             frac = (1 - frac.m[, j]))), frac.m[, seq_len(ncol(frac.m))[-1]])
         fit1 <- suppressWarnings(eBayes(suppressWarnings(lmFit(beta.m, design = design1))))
         m1.df <- suppressWarnings(topTable(fit1, coef = 2, number = Inf, sort.by = "none", 
             adjust.method = adjPMethod))
-        design2 <- cbind(model.matrix(~type + type:frac, data = data.frame(type = pheno.v, 
-            frac = frac.m[, j])), frac.m[, seq_len(ncol(frac.m))[-1]])
-        fit2 <- suppressWarnings(eBayes(suppressWarnings(lmFit(beta.m, design = design2))))
-        m2.df <- suppressWarnings(topTable(fit2, coef = 2, number = Inf, sort.by = "none", 
-            adjust.method = adjPMethod))
-        return(list(m1 = m1.df, m2 = m2.df))
+        return(list(m1 = m1.df))
     }, mc.preschedule = TRUE, mc.cores = min(mc.cores, ncol(frac.m)), mc.allow.recursive = TRUE, 
         mc.silent = TRUE)
     
@@ -176,59 +144,24 @@ CellDMC.improved <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPTh
     rawP.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$P.Value))
     adjP.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$adj.P.Val))
     T.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$t))
-    tmpDelta.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m2$logFC))
-    tmpAdjP.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m2$adj.P.Val))
-    tmpSign.m <- do.call(cbind, lapply(tmp.ld, function(x) sign(x$m1$logFC) * sign(x$m2$logFC)))
-    rm(tmp.ld)
-    
-    is.uniAll <- function(tmpCoe.m, i) {
-        all(tmpCoe.m[5, ] == 1) & (nlevels(factor(sign(tmpCoe.m[1, ]))) == 1) & all(apply(tmpCoe.m, 
-            2, function(x) all(abs(x[c(1, 3)]) > DiffThresh))) & m0.adjP[i] < adjPThresh
-    }
-    is.Bi <- function(tmpCoe.m) {
-        any(apply(tmpCoe.m, 2, function(x) {
-            abs(x[1]) > DiffThresh & abs(x[3]) > DiffThresh & x[2] < adjPThresh & 
-                x[4] < adjPThresh & x[5] == -1
-        })) & nlevels(factor(sign(tmpCoe.m[1, ]))) == 2
-        
-    }
+
     
     ### pattern matching
     dmct.m <- do.call(rbind, mclapply(seq_len(nrow(beta.m)), function(i) {
-        tmpCoe.m <- rbind(Delta.m[i, ], adjP.m[i, ], tmpDelta.m[i, ], tmpAdjP.m[i, 
-            ], tmpSign.m[i, ])
+      tmpCoe.m <- rbind(Delta.m[i, ], adjP.m[i, ])
         
-        ### check uni-all pattern
-        if (DiffThresh > 0) {
-            if (is.uniAll(tmpCoe.m, i)) 
-                return(c(1, rep(sign(tmpCoe.m[1, 1]), ncol(tmpCoe.m))))
-        }
-        
-        sig.idx <- which(apply(tmpCoe.m, 2, function(x) {
-            abs(x[1]) > DiffThresh & x[2] < adjPThresh
-        }))
-        
-        ### check bi-directional pattern
-        if (nlevels(factor(sign(tmpCoe.m[1, sig.idx]))) == 1) {
-            if (is.Bi(tmpCoe.m)) {
-                tmp.m <- cbind(tmpCoe.m[1, ], tmpCoe.m[2, ], seq_len(ncol(frac.m)))
-                tmp.m <- tmp.m[which(sign(tmp.m[, 1]) != sign(tmp.m[sig.idx[1], 1])), 
-                  , drop = FALSE]
-                sig.idx <- c(sig.idx, tmp.m[which.min(tmp.m[, 2]), 3])
-                dmc.v <- c(1, rep(0, ncol(tmpCoe.m)))
-                dmc.v[sig.idx + 1] <- sign(tmpCoe.m[1, sig.idx])
-                return(dmc.v)
-            }
-        }
-        
-        ### all other
-        if (length(sig.idx) == 0) {
-            return(c(0, rep(0, ncol(tmpCoe.m))))
-        } else {
-            dmc.v <- c(1, rep(0, ncol(tmpCoe.m)))
-            dmc.v[sig.idx + 1] <- sign(tmpCoe.m[1, sig.idx])
-            return(dmc.v)
-        }
+      sig.idx <- which(apply(tmpCoe.m, 2, function(x) {
+        x[2] < adjPThresh
+      }))
+      ### call DMCT
+      if (length(sig.idx) == 0) {
+        return(c(0, rep(0, ncol(tmpCoe.m))))
+      } else {
+        dmct.v <- c(1, rep(0, ncol(tmpCoe.m)))
+        dmct.v[sig.idx + 1] <- sign(tmpCoe.m[1, sig.idx])
+        return(dmct.v)
+      }
+
         
     }, mc.preschedule = TRUE, mc.cores = mc.cores, mc.allow.recursive = TRUE))
     
@@ -256,66 +189,6 @@ CellDMC.improved <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPTh
 }
 
 
-CellDMC.continuous <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05, 
-                              mc.cores = 1) {
-  
-  ### Fit Int models for each cell-type
-  tmp.ld <- mclapply(seq_len(ncol(frac.m)), function(j) {
-    design1 <- cbind(model.matrix(~pheno + pheno:frac, data = data.frame(pheno = pheno.v, 
-                                                                       frac = (1 - frac.m[, j]))), frac.m[, seq_len(ncol(frac.m))[-1]])
-    fit1 <- suppressWarnings(eBayes(suppressWarnings(lmFit(beta.m, design = design1))))
-    m1.df <- suppressWarnings(topTable(fit1, coef = 2, number = Inf, sort.by = "none", 
-                                       adjust.method = adjPMethod))
-    return(list(m1 = m1.df))
-  }, mc.preschedule = TRUE, mc.cores = min(mc.cores, ncol(frac.m)), mc.allow.recursive = TRUE, 
-  mc.silent = TRUE)
-  
-  Delta.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$logFC))
-  rawP.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$P.Value))
-  adjP.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$adj.P.Val))
-  T.m <- do.call(cbind, lapply(tmp.ld, function(x) x$m1$t))
-
-  
-  ### pattern matching
-  dmct.m <- do.call(rbind, mclapply(seq_len(nrow(beta.m)), function(i) {
-    tmpCoe.m <- rbind(Delta.m[i, ], adjP.m[i, ])
-    
-    sig.idx <- which(apply(tmpCoe.m, 2, function(x) {
-      x[2] < adjPThresh
-    }))
-  
-    if (length(sig.idx) == 0) {
-      return(c(0, rep(0, ncol(tmpCoe.m))))
-    } else {
-      dmc.v <- c(1, rep(0, ncol(tmpCoe.m)))
-      dmc.v[sig.idx + 1] <- sign(tmpCoe.m[1, sig.idx])
-      return(dmc.v)
-    }
-    
-  }, mc.preschedule = TRUE, mc.cores = mc.cores, mc.allow.recursive = TRUE))
-  
-  colnames(dmct.m) <- c("DMC", colnames(frac.m))
-  rownames(dmct.m) <- rownames(beta.m)
-  
-  ### fix overstimation
-  Delta.m[Delta.m < -1] <- -1
-  Delta.m[Delta.m > 1] <- 1
-  
-  ### coe list
-  coe.ld <- lapply(seq_len(ncol(frac.m)), function(i) {
-    out <- data.frame(rank = rank(rawP.m[, i], ties.method = "random"), Delta = Delta.m[, 
-                                                                                        i], Tstat = T.m[, i], rawP = rawP.m[, i], adjP = adjP.m[, i], cpg = rownames(beta.m))
-    out <- arrange(out, rank)
-    cpg <- out$cpg
-    out <- as.data.frame(select(out, -cpg))
-    rownames(out) <- cpg
-    return(out)
-  })
-  names(coe.ld) <- colnames(frac.m)
-  
-  
-  return(list(dmct = dmct.m, coe = coe.ld))
-}
 
 
 CellDMC.basic <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05, 
@@ -324,9 +197,11 @@ CellDMC.basic <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThres
     
     ### Fit Int models for each cell-type
     tmp.ld <- mclapply(seq_len(ncol(frac.m)), function(j) {
-        design1 <- cbind(model.matrix(~type + type:frac, data = data.frame(type = pheno.v, 
+        design1 <- cbind(model.matrix(~pheno + pheno:frac, data = data.frame(pheno = pheno.v, 
             frac = frac.m[, j])), frac.m[, seq_len(ncol(frac.m))[-1]])
-        design1 <- design1[, c(1, 2, 4:ncol(design1), 3)]
+        if (is.factor(pheno.v)) {
+          design1 <- design1[, c(1, 2, 4:ncol(design1), 3)]
+        }
         fit1 <- suppressWarnings(eBayes(suppressWarnings(lmFit(beta.m, design = design1))))
         m1.df <- suppressWarnings(topTable(fit1, coef = 2, number = Inf, sort.by = "none", 
             adjust.method = adjPMethod))
@@ -383,9 +258,9 @@ CellDMC.basic <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThres
             }
             
         } else {
-            dmc.v <- rep(0, ncol(frac.m))
-            dmc.v[sig.idx] <- sign(Delta.m[i, sig.idx])
-            return(dmc.v)
+            dmct.v <- rep(0, ncol(frac.m))
+            dmct.v[sig.idx] <- sign(Delta.m[i, sig.idx])
+            return(dmct.v)
         }
         
     }, mc.preschedule = TRUE, mc.cores = mc.cores, mc.allow.recursive = TRUE))

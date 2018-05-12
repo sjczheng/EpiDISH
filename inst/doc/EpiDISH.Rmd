@@ -68,7 +68,7 @@ And the improved **CellDMC**(which is the default mode of **CellDMC** function)
 ![Fig3. Improved CellDMC workflow](improved.jpg)
 
 ```{r celldmc, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
-pheno.v <- rep(c(0, 1), each = 5)
+pheno.v <- factor(rep(c(0, 1), each = 5))
 celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m)
 ```
 
