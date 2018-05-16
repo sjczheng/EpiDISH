@@ -113,6 +113,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic") ,
     
     ### check NA phenotype
     if (any(is.na(pheno.v))) {
+      message(paste0(sum(is.na(pheno.v)), " NA phenotype found and removed."))
       retain.idx <- which(!is.na(pheno.v))
       pheno.v <- pheno.v[retain.idx]
       beta.m <- beta.m[, retain.idx]
