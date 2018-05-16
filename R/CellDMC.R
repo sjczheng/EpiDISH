@@ -111,6 +111,16 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic") ,
     if (length(colnames(frac.m)) != ncol(frac.m)) 
         stop("Pls assign correct name of cell-type to frac.m")
     
+    ### check NA phenotype
+    if (any(is.na(pheno.v))) {
+      retain.idx <- which(!is.na(pheno.v))
+      pheno.v <- pheno.v[retain.idx]
+      beta.m <- beta.m[, retain.idx]
+      frac.m <- frac.m[retain.idx, ]
+      if (!is.null(cov.mod)) cov.mod <- cov.mod[retain.idx, ]
+    }
+    
+    
     ### guess factor input
     if (nlevels(factor(pheno.v)) == 2) {
       message("Binary phenotype detected. Predicted direction will be 1 - 0.")
@@ -152,7 +162,7 @@ CellDMC.improved <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPTh
       design1 <- cbind(model.matrix(~pheno + pheno:frac, 
                                     data = data.frame(pheno = pheno.v, 
                                                       frac = (1 - frac.m[, j]))),
-                       frac.m[, seq_len(ncol(frac.m))[-1]], cov.mod[,-1])
+                       frac.m[, seq_len(ncol(frac.m))[-1]])
       
         if (!is.null(cov.mod)) {
           design1 <- cbind(design1, cov.mod[,-1])
