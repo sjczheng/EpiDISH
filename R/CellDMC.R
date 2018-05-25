@@ -127,8 +127,14 @@ CellDMC <- function(beta.m, pheno.v, frac.m, mode = c("improved", "basic") ,
       message("Binary phenotype detected. Predicted direction will be 1 - 0.")
       pheno.v <- factor(pheno.v)
     }
-    if (!is.factor(pheno.v)) 
-      message("pheno.v is not factor. Treating as continuous variables. Input factos for categorical phenotypes.")
+    if (is.character(pheno.v)) {
+      message("pheno.v is character. Treating as categorical phenotypes.")
+      pheno.v <- factor(pheno.v)
+    }
+      
+    if (!is.factor(pheno.v) & !is.character(pheno.v)) 
+      message("pheno.v is not factor or character. Treating as continuous variables. Input factors for categorical phenotypes.")
+
     
     if (!mode %in% c("improved", "basic")) 
         stop("Input a valid mode!")
@@ -163,7 +169,7 @@ CellDMC.improved <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPTh
       design1 <- cbind(model.matrix(~pheno + pheno:frac, 
                                     data = data.frame(pheno = pheno.v, 
                                                       frac = (1 - frac.m[, j]))),
-                       frac.m[, seq_len(ncol(frac.m))[-1]])
+                       frac.m[, seq_len(ncol(frac.m))[-j]])
       
         if (!is.null(cov.mod)) {
           design1 <- cbind(design1, cov.mod[,-1])
@@ -234,7 +240,7 @@ CellDMC.basic <- function(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThres
     ### Fit Int models for each cell-type
     tmp.ld <- mclapply(seq_len(ncol(frac.m)), function(j) {
         design1 <- cbind(model.matrix(~pheno + pheno:frac, data = data.frame(pheno = pheno.v, 
-            frac = frac.m[, j])), frac.m[, seq_len(ncol(frac.m))[-1]])
+            frac = frac.m[, j])), frac.m[, seq_len(ncol(frac.m))[-j]])
         if (!is.null(cov.mod)) {
           design1 <- cbind(design1, cov.mod[,-1])
         } 
