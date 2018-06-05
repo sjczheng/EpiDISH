@@ -11,7 +11,7 @@ Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie C.
         Zheng<shijieczheng@gmail.com>
 Maintainer: Shijie Charles Zheng<shijieczheng@gmail.com>
 Depends: R (>= 3.4)
-Imports: MASS, e1071, quadprog, parallel, zoo, stats, limma, dplyr
+Imports: MASS, e1071, quadprog, parallel, stats, dplyr, matrixStats, stringr
 Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase,
         testthat
 VignetteBuilder: knitr

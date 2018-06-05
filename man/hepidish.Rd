@@ -68,7 +68,7 @@ ref2.m = centBloodSub.m, h.CT.idx = 3, method = 'RPC')
 Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, 
 Beck S, Widschwendter M, Teschendorff AE
 \emph{A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix.}
-Epigenomics (2018) In Press.
+Epigenomics (2018) Epub ahead of print.
 
 Teschendorff AE, Breeze CE, Zheng SC, Beck S. 
 \emph{A comparison of reference-based algorithms for correcting cell-type 

@@ -60,12 +60,10 @@ We compared CP and RPC in [@EpiDISH]. And we also have a review article[@review]
 
 
 # How to identify differentially methylated cell-types and their directionality of change
-After estimate cell-type fractions, we can identify differentially methylated cell-types and their directionality of change using **CellDMC** [@CellDMC]function. We provide two modes of **CellDMC**. The workflow of basic **CellDMC** is shown below.
-![Fig2. Basic CellDMC workflow](basic.jpg)
+After estimate cell-type fractions, we can identify differentially methylated cell-types and their directionality of change using **CellDMC** [@CellDMC]function. The workflow of **CellDMC** is shown below.
+![Fig2. CellDMC workflow](CellDMC.jpg)
 
 
-And the improved **CellDMC**(which is the default mode of **CellDMC** function)
-![Fig3. Improved CellDMC workflow](improved.jpg)
 
 ```{r celldmc, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
 pheno.v <- factor(rep(c(0, 1), each = 5))

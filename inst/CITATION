@@ -5,6 +5,7 @@ citEntry(
   entry="article",	
   author = c(
              person(c("Shijie", "C."), "Zheng"),
+             person(c("Charles", "E."), "Breeze"),
              person("Stephan", "Beck"),
              person(c("Andrew", "E."), "Teschendorff")
            ),
@@ -12,7 +13,7 @@ citEntry(
   journal="In preparation",
   year=2018,
   
-  textVersion="Zheng SC, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. In preparation."
+  textVersion="Zheng SC, Breeze CE, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. In preparation."
 )
 
 citEntry(
@@ -34,7 +35,7 @@ citEntry(
   journal="Epigenomics",
   year=2018,
   volume= "Epub ahead of print",
-  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics In Press."
+  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics. Epub ahead of print."
 )
 
 

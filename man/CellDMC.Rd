@@ -5,26 +5,22 @@
 \title{A method that allows the identification of differentially methylated 
 cell-types and their directionality of change}
 \usage{
-CellDMC(beta.m, pheno.v, frac.m, mode = c("improved", "basic"),
-  adjPMethod = "fdr", adjPThresh = 0.05, cov.mod = NULL, mc.cores = 1)
+CellDMC(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05,
+  cov.mod = NULL, sort = FALSE, mc.cores = 1)
 }
 \arguments{
 \item{beta.m}{A beta value matrix with rows labeling the CpGs and columns labeling 
 samples. This contains all CpGs, from which you want to find DMCTs.}
 
-\item{pheno.v}{A vector of phenotype. CellDMC can handle both of categorical and 
-continuous/oderinal phenotypes. For categorical phenotypes, you must input 
-factors to make sure you get the right results.}
+\item{pheno.v}{A vector of phenotype. CellDMC can handle both of binary and 
+continuous/oderinal phenotypes. \code{NA} is not allowed in
+\code{pheno.v}.}
 
 \item{frac.m}{A matrix contains fractions of each cell-type. Each row labels a sample, 
 with the same order of the columns in beta.m. Each column labels a 
 cell-type. Column names, which are names of cell-types, are required. The 
 rowSums of frac.m should be 1, and all values should be greater than 0 and 
 less than 1.}
-
-\item{mode}{We provide two modes of CellDMC. One is 'basic' algorithm, and the other is 
-'improved' algorithm. \code{mode} can be either of 'improved' or 'basic', 
-with default as 'improved'. For more details, pls refer to the reference.}
 
 \item{adjPMethod}{A method to adjust p values. The method can be any of method accepted by 
 \code{\link{p.adjust}}.}
@@ -36,6 +32,9 @@ Adjusted p values less than this threshold will be picked.}
 be adjusted. For example, input 
 \code{model.matrix(~ geneder, data = pheno.df)} to adjust gender. Do not put
  cell-type fraction here!}
+
+\item{sort}{Default as \code{FALSE}. If \code{TRUE}, the data.frame in coe list will sorted 
+based on p value of each CpG.}
 
 \item{mc.cores}{The number of cores to use, i.e. at most how many child processes will be 
 run simultaneously. The defatul is 1, which means no parallelization.}
@@ -54,16 +53,11 @@ the same as input \code{beta.m}.
 
 coe
 This list contains several dataframe, which corresponds to each cel-type in
- \code{frac.m}. For \code{basic} mode, each dataframe only contains 
- coefficients of DMCTs for each cell-type. For \code{improved} mode, each 
- dataframe contains all CpGs in input \code{beta.m}. For both modes, each 
- dataframe has been ranked with significant level of DMCTs of corresponding 
- cell-type respectively. Pls note that the order of rows in these dataframe 
- is different from the order of rows in \code{dmct} matrix. You can reorder 
- them using the rownames. All dataframes contains ranks(\code{rank}), 
- estimated DNAm differences(\code{Delta}), estimated T 
- statistics(\code{Tstat}), raw P values(\code{rawP}), and multiple 
-hypothesis corrected P values(\code{adjP}).
+ \code{frac.m}. Each dataframe contains all CpGs in input \code{beta.m}. 
+ All dataframes contain estimated DNAm differences(\code{Delta}), 
+ standard error(\code{StdError}), estimated t statistics(\code{t}), 
+ raw P values(\code{p}), and multiple hypothesis corrected P 
+ values(\code{adjP}).
 }
 \description{
 An outstanding challenge of Epigenome-Wide Association Studies performed in 
@@ -85,7 +79,7 @@ celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m)
 
 }
 \references{
-Zheng SC, Beck S, Teschendorff AE. 
+Zheng SC, Breeze CE, Beck S, Teschendorff AE. 
 \emph{Identification of differentially methylated cell-types in 
 Epigenome-Wide Association Studies.} In preparation (2018).
 }
