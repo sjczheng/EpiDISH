@@ -64,7 +64,7 @@
 #' This list contains several dataframe, which corresponds to each cel-type in
 #'  \code{frac.m}. Each dataframe contains all CpGs in input \code{beta.m}. 
 #'  All dataframes contain estimated DNAm differences(\code{Delta}), 
-#'  estimated t statistics(\code{t}), 
+#'  standard error(\code{StdError}), estimated t statistics(\code{t}), 
 #'  raw P values(\code{p}), and multiple hypothesis corrected P 
 #'  values(\code{adjP}).
 #' 
@@ -89,11 +89,99 @@
 #' @importFrom stringr str_c
 #' @import stats
 #' @importFrom dplyr arrange select
-#' @import limma
 #' 
 #' @export
 #' 
 CellDMC <- function(beta.m, pheno.v, frac.m, 
+                    adjPMethod = "fdr", adjPThresh = 0.05, cov.mod = NULL, 
+                    sort = FALSE, mc.cores = 1) {
+    ### check input
+    if (sum(is.na(pheno.v)) > 0) stop("No NA allowed in pheno.v!")
+    if (ncol(beta.m) != length(pheno.v)) 
+        stop("Number of columns of beta.m should equal to length of pheno.v!")
+    if (ncol(beta.m) != nrow(frac.m)) 
+        stop("Number of columns of beta.m should equal to number of rows of 
+             frac.m!")
+    if (length(colnames(frac.m)) != ncol(frac.m)) 
+        stop("Pls assign correct name of cell-type to frac.m")
+  
+    
+    
+    ### guess factor input
+    if (nlevels(factor(pheno.v)) == 2) {
+        message("Binary phenotype detected. Predicted direction will be 1 - 0.")
+        pheno.v <- factor(pheno.v)
+    }
+      
+    if (!is.factor(pheno.v) & !is.character(pheno.v)) 
+        message("pheno.v is not factor or character. Treating as continuous 
+              variables. Input factors for categorical phenotypes.")
+
+    
+  
+  ### Fit model
+  design <- model.matrix(~ frac.m + pheno.v:frac.m)[, -1]
+  if (!is.null(cov.mod)) design <- cbind(design, cov.mod[, -1])
+  
+  
+  IntNames.v <- str_c(colnames(frac.m), "Pheno")
+  colnames(design)[(1 + ncol(frac.m)):(2*ncol(frac.m))] <- IntNames.v 
+  
+  allCoe.m <- do.call(rbind, mclapply(seq_len(nrow(beta.m)), function(i) {
+      beta.v <- beta.m[i, ]
+      ### model
+      Int.o <- lm(beta.v ~ ., data = data.frame(design))
+    
+      ### get coe
+      IntCoe.m <- summary(Int.o)$coe[IntNames.v, ]
+      IntCoe.v <- unlist(apply(IntCoe.m, 1, function(x) list(x)))
+    
+      names(IntCoe.v) <- NULL
+      return(IntCoe.v)
+  }, mc.preschedule = TRUE, mc.cores = mc.cores, mc.allow.recursive = TRUE))
+  
+  coe.ld <- lapply(seq_len(ncol(frac.m)), function(j) {
+        idx <- ((j - 1)*4 + 1):((j - 1)*4 + 4)
+        tmp.m <- allCoe.m[, idx]
+        tmp.m <- cbind(tmp.m, p.adjust(tmp.m[, 4], method = adjPMethod))
+        tmp.m[which(tmp.m[,1] > 1),1] <- 1
+        tmp.m[which(tmp.m[,1] < -1),1] <- -1
+        colnames(tmp.m) <- c("Delta", "StdError", "t", "p", "adjP")
+        rownames(tmp.m) <- rownames(beta.m)
+        return(data.frame(tmp.m))
+  })
+  names(coe.ld) <- colnames(frac.m)
+  
+  
+  dmct.m <- matrix(rep(0, ncol(frac.m)*nrow(beta.m)), ncol = ncol(frac.m))
+  dmct.idx <- which(sapply(coe.ld, "[[", "adjP") < adjPThresh)
+  dmct.m[dmct.idx] <- sign(sapply(coe.ld, "[[", "Delta")[dmct.idx])
+  dmc.v <- ifelse(rowAlls(dmct.m == 0), 0, 1)
+  dmct.m <- cbind(dmc.v, dmct.m)
+  colnames(dmct.m) <- c("DMC", colnames(frac.m))
+  rownames(dmct.m) <- rownames(beta.m)
+  
+  if(sort) {
+      coe.ld <- lapply(coe.ld, function(x) {
+      x$cpg <- rownames(x)
+      x <- dplyr::arrange(x, "p")
+      cpg <- x$cpg
+      x <- as.data.frame(dplyr::select(x, -cpg))
+      rownames(x) <- cpg
+      return(x)
+    })
+  }
+  
+  
+  return(list(dmct = dmct.m, coe = coe.ld))
+}
+
+
+
+#' @import limma
+# legacy version
+
+CellDMC.legacy <- function(beta.m, pheno.v, frac.m, 
                     adjPMethod = "fdr", adjPThresh = 0.05, cov.mod = NULL, 
                     sort = FALSE, mc.cores = 1) {
   ### check input
@@ -163,3 +251,4 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
   
     return(list(dmct = dmct.m, coe = coe.ld))
 }
+
