@@ -81,5 +81,5 @@ celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m)
 \references{
 Zheng SC, Breeze CE, Beck S, Teschendorff AE. 
 \emph{Identification of differentially methylated cell-types in 
-Epigenome-Wide Association Studies.} In preparation (2018).
+Epigenome-Wide Association Studies.} Accepted (2018).
 }
