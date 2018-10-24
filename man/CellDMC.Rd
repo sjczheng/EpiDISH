@@ -33,8 +33,8 @@ be adjusted. For example, input
 \code{model.matrix(~ geneder, data = pheno.df)} to adjust gender. Do not put
  cell-type fraction here!}
 
-\item{sort}{Default as \code{FALSE}. If \code{TRUE}, the data.frame in coe list will 
-sorted based on p value of each CpG.}
+\item{sort}{Default as \code{FALSE}. If \code{TRUE}, the data.frame in coe list will sorted 
+based on p value of each CpG.}
 
 \item{mc.cores}{The number of cores to use, i.e. at most how many child processes will be 
 run simultaneously. The defatul is 1, which means no parallelization.}
@@ -55,7 +55,7 @@ coe
 This list contains several dataframe, which corresponds to each cel-type in
  \code{frac.m}. Each dataframe contains all CpGs in input \code{beta.m}. 
  All dataframes contain estimated DNAm differences(\code{Delta}), 
- estimated t statistics(\code{t}), 
+ standard error(\code{StdError}), estimated t statistics(\code{t}), 
  raw P values(\code{p}), and multiple hypothesis corrected P 
  values(\code{adjP}).
 }
@@ -83,3 +83,4 @@ Zheng SC, Breeze CE, Beck S, Teschendorff AE.
 \emph{Identification of differentially methylated cell-types in 
 Epigenome-Wide Association Studies.} Accepted (2018).
 }
+
