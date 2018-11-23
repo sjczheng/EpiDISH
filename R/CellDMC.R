@@ -109,7 +109,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
         stop("Pls assign correct names of cell-type to frac.m")
   
     ### check whether input is beta value matrix
-    is.beta <- if ((min(beta.m) >= 0) & (max(beta.m) <= 1))
+    is.beta <- ((min(beta.m) >= 0) & (max(beta.m) <= 1))
     
     ### guess factor input
     if (nlevels(factor(pheno.v)) == 2) {
