@@ -4,9 +4,9 @@
 \alias{hepidish}
 \title{Hierarchical EpiDISH (HEpiDISH)}
 \usage{
-hepidish(beta.m, ref1.m, ref2.m, h.CT.idx, method = c("RPC", "CBS", "CP"),
-  maxit = 50, nu.v = c(0.25, 0.5, 0.75), constraint = c("inequality",
-  "equality"))
+hepidish(beta.m, ref1.m, ref2.m, h.CT.idx, method = c("RPC", "CBS",
+  "CP"), maxit = 50, nu.v = c(0.25, 0.5, 0.75),
+  constraint = c("inequality", "equality"))
 }
 \arguments{
 \item{beta.m}{A data matrix with rows labeling the molecular features (should use same ID 
@@ -68,7 +68,9 @@ ref2.m = centBloodSub.m, h.CT.idx = 3, method = 'RPC')
 Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, 
 Beck S, Widschwendter M, Teschendorff AE
 \emph{A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix.}
-Epigenomics (2018) Epub ahead of print.
+Epigenomics (2018) 10: 925-940.
+doi:\href{https://doi.org/10.2217/epi-2018-0037}{
+10.2217/epi-2018-0037}.
 
 Teschendorff AE, Breeze CE, Zheng SC, Beck S. 
 \emph{A comparison of reference-based algorithms for correcting cell-type 

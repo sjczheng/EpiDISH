@@ -29,7 +29,9 @@ confounded by the epithelial and fibroblast cells in the sample.
 Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, 
 Beck S, Widschwendter M, Teschendorff AE
 \emph{A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix.}
-Epigenomics (2018) Epub ahead of print.
+Epigenomics (2018) 10: 925-940.
+doi:\href{https://doi.org/10.2217/epi-2018-0037}{
+10.2217/epi-2018-0037}.
 
 Teschendorff AE, Breeze CE, Zheng SC, Beck S. 
 \emph{A comparison of reference-based algorithms for correcting cell-type 

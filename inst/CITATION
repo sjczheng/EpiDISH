@@ -10,10 +10,11 @@ citEntry(
              person(c("Andrew", "E."), "Teschendorff")
            ),
   title="Identification of differentially methylated cell-types in Epigenome-Wide Association Studies",
-  journal="In preparation",
+  journal="Nature Methods",
+  volume= "(In press)",
   year=2018,
   
-  textVersion="Zheng SC, Breeze CE, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. In preparation."
+  textVersion="Zheng SC, Breeze CE, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Nat Methods (In press)."
 )
 
 citEntry(
@@ -34,8 +35,9 @@ citEntry(
   title="A novel cell-type deconvolution algorithm reveals substantial contamination by immune cells in saliva, buccal and cervix",
   journal="Epigenomics",
   year=2018,
-  volume= "Epub ahead of print",
-  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics. Epub ahead of print."
+  volume= 10,
+  number=7,
+  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics 10: 925-940"
 )
 
 

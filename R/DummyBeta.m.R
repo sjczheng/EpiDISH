@@ -1,6 +1,7 @@
 #' Dummy beta value matrix
 #'
-#' A faked beta value matrix of 2000 CpGs and 10 samples.
+#' A faked beta value matrix of 2000 CpGs and 10 samples. 
+#' Only used for examples.
 #'
 #' \itemize{
 #'   \item beta value matrix of 2000 CpGs and 10 samples

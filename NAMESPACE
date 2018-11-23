@@ -3,7 +3,6 @@
 export(CellDMC)
 export(epidish)
 export(hepidish)
-import(limma)
 import(matrixStats)
 import(parallel)
 import(stats)

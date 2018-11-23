@@ -3,7 +3,7 @@
 \name{CellDMC}
 \alias{CellDMC}
 \title{A method that allows the identification of differentially methylated 
-cell-types and their directionality of change}
+cell-types and the estimated change of each cell-type}
 \usage{
 CellDMC(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05,
   cov.mod = NULL, sort = FALSE, mc.cores = 1)
@@ -19,24 +19,25 @@ continuous/oderinal phenotypes. \code{NA} is not allowed in
 \item{frac.m}{A matrix contains fractions of each cell-type. Each row labels a sample, 
 with the same order of the columns in beta.m. Each column labels a 
 cell-type. Column names, which are names of cell-types, are required. The 
-rowSums of frac.m should be 1, and all values should be greater than 0 and 
-less than 1.}
+rowSums of frac.m should be 1 or close to 1.}
 
-\item{adjPMethod}{A method to adjust p values. The method can be any of method accepted by 
-\code{\link{p.adjust}}.}
+\item{adjPMethod}{The method will be ued to adjust p values. The method can be any of method
+accepted by \code{\link{p.adjust}}.}
 
 \item{adjPThresh}{A numeric value, default as 0.05. This is used to call significant DMCTs. 
-Adjusted p values less than this threshold will be picked.}
+Adjusted p values less than this threshold will be reported as DMCTs (-1 or
+ 1) in the first item 'dmct' of returned list.}
 
 \item{cov.mod}{A design matrix from \code{model.matrix}, which contains other covariates to
 be adjusted. For example, input 
 \code{model.matrix(~ geneder, data = pheno.df)} to adjust gender. Do not put
  cell-type fraction here!}
 
-\item{sort}{Default as \code{FALSE}. If \code{TRUE}, the data.frame in coe list will sorted 
-based on p value of each CpG.}
+\item{sort}{Default as \code{FALSE}. If \code{TRUE}, the data.frame in coe list will 
+sorted based on p value of each CpG. The order of 'dmct' will not change 
+since the orders of each cell-type are different.}
 
-\item{mc.cores}{The number of cores to use, i.e. at most how many child processes will be 
+\item{mc.cores}{The number of cores to use, i.e. at most how many threads will 
 run simultaneously. The defatul is 1, which means no parallelization.}
 }
 \value{
@@ -52,20 +53,20 @@ Otherwise, the value is 0 (non-DMCT). The rows of this matrix are ordered as
 the same as input \code{beta.m}.
 
 coe
-This list contains several dataframe, which corresponds to each cel-type in
+This list contains several dataframes, which correspond to each cel-type in
  \code{frac.m}. Each dataframe contains all CpGs in input \code{beta.m}. 
- All dataframes contain estimated DNAm differences(\code{Delta}), 
- standard error(\code{StdError}), estimated t statistics(\code{t}), 
- raw P values(\code{p}), and multiple hypothesis corrected P 
- values(\code{adjP}).
+ All dataframes contain estimated DNAm changes (\code{Estimate}), 
+ standard error (\code{SE}), estimated t statistics (\code{t}), 
+ raw P values (\code{p}), and multiple hypothesis corrected P 
+ values (\code{adjP}).
 }
 \description{
 An outstanding challenge of Epigenome-Wide Association Studies performed in 
 complex tissues is the identification of the specific cell-type(s) 
-responsiblefor the observed differential methylation. CellDMC a novel 
+responsible for the observed differential methylation. CellDMC is a novel 
 statistical algorithm, which is able to identify not only differentially 
 methylated positions, but also the specific cell-type(s) driving the 
-differential methylation.
+methylation change.
 }
 \examples{
 data(centEpiFibIC.m)
@@ -74,13 +75,13 @@ out.l <- epidish(DummyBeta.m, centEpiFibIC.m, method = 'RPC')
 frac.m <- out.l$estF
 pheno.v <- factor(rep(c(0, 1), each = 5))
 celldmc.o <- CellDMC(DummyBeta.m, pheno.v, frac.m) 
-# Pls note this is faked beta value matrix
+# Pls note this is a faked beta value matrix.
 
 
 }
 \references{
 Zheng SC, Breeze CE, Beck S, Teschendorff AE. 
 \emph{Identification of differentially methylated cell-types in 
-Epigenome-Wide Association Studies.} Accepted (2018).
+Epigenome-Wide Association Studies.} 
+Nat Methods (2018) In press.
 }
-

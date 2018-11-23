@@ -37,20 +37,20 @@ Houseman et al (2012).}
 CP-mode
 A list with the following entries: estF: the estimated cell fraction matrix; 
 ref: the reference centroid matrix used; dataREF: the input data matrix over 
-the probes defined in the reference matrix
+the probes defined in the reference matrix.
 
 CBS-mode
 A list with the following entries: estF: the estimated cell fraction matrix; 
 nu: a vector of 'best' nu-parameter for each sample; 
 ref: the reference centroid matrix used;
 dataREF: the input data matrix over the probes defined in the reference 
-matrix
+matrix.
 
 RPC-mode
 A list with the following entries: estF: the estimated cell fraction 
 matrix; ref: the reference centroid matrix used; 
 dataREF: the input data matrix over the probes defined in the reference 
-matrix
+matrix.
 }
 \description{
 A reference-based function to infer the proportions of a priori known cell 

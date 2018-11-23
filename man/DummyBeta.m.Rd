@@ -9,7 +9,8 @@
 data(DummyBeta.m)
 }
 \description{
-A faked beta value matrix of 2000 CpGs and 10 samples.
+A faked beta value matrix of 2000 CpGs and 10 samples. 
+Only used for examples.
 }
 \details{
 \itemize{
