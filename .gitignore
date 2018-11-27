@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 Meta
 doc
+=======
+>>>>>>> upstream/master
 .Rproj.user
 .Rhistory
 .RData
 .Rproject
+<<<<<<< HEAD
 .DS_Store
 .Rbuildignore
+=======
+.DS_Store
+>>>>>>> upstream/master
