@@ -8,18 +8,18 @@
 #' al (2017). It contains 333 tsDHS-DMCs of 8 blood cell subtypes(You can select 
 #' the corresponding cell types existing in the dataset, which you would like to 
 #' estimate cell proportions, to use. Notice that Granulocytes consist of 
-#' Neutrophils and Eosinophils. So you should include either of Granulocytes 
-#' column or Neutrophils and Eosinophils columns.):
+#' Neutrophils and Eosinophils. \emph{So you should include either of Granulocytes 
+#' column or Neutrophils and Eosinophils columns.}):
 #'
 #' \itemize{
 #'   \item B-cells
 #'   \item CD4+ T-cells
 #'   \item CD8+ T-cells 
 #'   \item NK-cells
+#'   \item Granulocytes
 #'   \item Monocytes
 #'   \item Neutrophils 
 #'   \item Eosinophils
-#'   \item Granulocytes
 #' }
 #'
 #' @docType data
