@@ -103,8 +103,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
     if (ncol(beta.m) != length(pheno.v)) 
         stop("Number of columns of beta.m should equal to length of pheno.v!")
     if (ncol(beta.m) != nrow(frac.m)) 
-        stop("Number of columns of beta.m should equal to number of rows of 
-             frac.m!")
+        stop("Number of columns of beta.m should equal to number of rows of frac.m!")
     if (length(colnames(frac.m)) != ncol(frac.m)) 
         stop("Pls assign correct names of cell-type to frac.m")
   
@@ -117,8 +116,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
         pheno.v <- factor(pheno.v)
     }
     if (!is.factor(pheno.v) & !is.character(pheno.v)) 
-        message("pheno.v is not factor or character. Treating as continuous 
-              variables. Input factors for categorical phenotypes.")
+        message("pheno.v is not factor or character. Treating as continuous variables.")
 
   ### Fit model
   design <- model.matrix(~ frac.m + pheno.v:frac.m)[, -1]
