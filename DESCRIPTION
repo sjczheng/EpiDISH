@@ -1,6 +1,6 @@
 Package: EpiDISH
 Title: Epigenetic Dissection of Intra-Sample-Heterogeneity
-Version: 1.99.1
+Version: 1.99.2
 Description: EpiDISH is a R package to infer the proportions of a
         priori known cell subtypes present in a sample representing a
         mixture of such cell-types. And it also provides a method that allows 

@@ -11,10 +11,11 @@ citEntry(
            ),
   title="Identification of differentially methylated cell-types in Epigenome-Wide Association Studies",
   journal="Nature Methods",
-  volume= "(In press)",
+  volume= 15,
+  number=12,
+  pages=1059,
   year=2018,
-  
-  textVersion="Zheng SC, Breeze CE, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Nat Methods (In press)."
+  textVersion="Zheng SC, Breeze CE, Beck S, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Nat Methods 15: 1059–1066."
 )
 
 citEntry(
@@ -37,7 +38,7 @@ citEntry(
   year=2018,
   volume= 10,
   number=7,
-  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics 10: 925-940"
+  textVersion="Zheng SC, Webster AP, Dong D, Feber A, Graham DG, Sullivan R, Jevons S, Lovat LB, Beck S, Widschwendter M, Teschendorff AE. 2018. Identification of differentially methylated cell-types in Epigenome-Wide Association Studies. Epigenomics 10: 925-940."
 )
 
 

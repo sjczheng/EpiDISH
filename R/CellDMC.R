@@ -74,8 +74,8 @@
 #' Zheng SC, Breeze CE, Beck S, Teschendorff AE. 
 #' \emph{Identification of differentially methylated cell-types in 
 #' Epigenome-Wide Association Studies.} 
-#' Nat Methods (2018) In press.
-#' 
+#' Nat Methods (2018) 15: 1059-1066
+#' doi:\href{https://doi.org/10.1038/s41592-018-0213-x}{10.1038/s41592-018-0213-x}.
 #' 
 #' @examples 
 #' data(centEpiFibIC.m)
