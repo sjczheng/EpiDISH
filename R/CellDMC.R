@@ -91,7 +91,6 @@
 #' @import parallel
 #' @importFrom stringr str_c
 #' @import stats
-#' @importFrom dplyr arrange select
 #' 
 #' @export
 #' 
