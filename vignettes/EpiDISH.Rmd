@@ -60,7 +60,7 @@ We compared CP and RPC in [@EpiDISH]. And we also have a review article[@review]
 
 
 # How to identify differentially methylated cell-types and their directionality of change
-After estimate cell-type fractions, we can identify differentially methylated cell-types and their directionality of change using **CellDMC** [@CellDMC]function. The workflow of **CellDMC** is shown below.
+After estimating cell-type fractions, we can identify differentially methylated cell-types and their directionality of change using **CellDMC** [@CellDMC]function. The workflow of **CellDMC** is shown below.
 ![Fig2. CellDMC workflow](CellDMC.jpg)
 
 
