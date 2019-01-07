@@ -18,7 +18,7 @@
 #' In the case of DNA methylation, these are beta-values.
 #' 
 #' @param ref1.m
-#' A matrix of \strong{primary}reference 'centroids', i.e. representative molecular profiles, 
+#' A matrix of \strong{primary} reference 'centroids', i.e. representative molecular profiles, 
 #' for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) 
 #' and columns label the cell-type. IDs need to be provided as rownames and 
 #' colnames, respectively. No missing values are allowed, and all values in 
@@ -26,7 +26,7 @@
 #' beta-values.
 #' 
 #' @param ref2.m
-#' Similar to \code{ref1.m}, but now a A matrix of \strong{secondary}reference.
+#' Similar to \code{ref1.m}, but now a A matrix of \strong{secondary} reference.
 #' For example, \code{ref1.m} contains reference centroids for epithelial cells,
 #' fibroblasts and total immune cells. \code{ref2.m} can be subtypes of immune
 #' cells, such as B-cells, NK cells, monocytes and etc. 
@@ -107,11 +107,11 @@ hepidish <- function(beta.m, ref1.m, ref2.m, h.CT.idx, method = c("RPC", "CBS", 
     if (method == "RPC") {
         frac1.m <- DoRPC(beta.m, ref1.m, maxit)$estF
         frac2.m <- DoRPC(beta.m, ref2.m, maxit)$estF
-        frac.m <- cbind(frac1.m[, -h.CT.idx], frac1.m[, h.CT.idx] * frac2.m)
+        frac.m <- cbind(frac1.m[, -h.CT.idx, drop = FALSE], frac1.m[, h.CT.idx] * frac2.m)
     } else if (method == "CBS") {
         frac1.m <- DoCBS(beta.m, ref1.m, nu.v)$estF
         frac2.m <- DoCBS(beta.m, ref2.m, nu.v)$estF
-        frac.m <- cbind(frac1.m[, -h.CT.idx], frac1.m[, h.CT.idx] * frac2.m)
+        frac.m <- cbind(frac1.m[, -h.CT.idx, drop = FALSE], frac1.m[, h.CT.idx] * frac2.m)
     } else if (method == "CP") {
         if (!constraint %in% c("inequality", "equality")) {
             # make sure constraint must be inequality or equality
@@ -119,7 +119,7 @@ hepidish <- function(beta.m, ref1.m, ref2.m, h.CT.idx, method = c("RPC", "CBS", 
         } else {
             frac1.m <- DoCP(beta.m, ref1.m, constraint)$estF
             frac2.m <- DoCP(beta.m, ref2.m, constraint)$estF
-            frac.m <- cbind(frac1.m[, -h.CT.idx], frac1.m[, h.CT.idx] * frac2.m)
+            frac.m <- cbind(frac1.m[, -h.CT.idx, drop = FALSE], frac1.m[, h.CT.idx] * frac2.m)
         }
     }
     return(frac.m)
