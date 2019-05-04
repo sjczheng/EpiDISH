@@ -1,22 +1,21 @@
-#' Whole blood reference of 333 tsDHS-DMCs and 8 blood cell subtypes
+#' Whole blood reference of 333 tsDHS-DMCs and 7 blood cell subtypes
 #'
 #' Reference-based cell proportions estimation algorithms rely on a prior 
 #' defined reference matrix. We leveraged cell-type specific DNAse Hypersensitive 
 #' Site (DHS) information from the NIH Epigenomics Roadmap, and used 450k purified 
 #' blood cell types dataset from Reinius et al (2012) to  construct this 
 #' improved reference DNA methylation dataset, as described in Teschendorff et 
-#' al (2017). It contains 333 tsDHS-DMCs of 8 blood cell subtypes(You can select 
+#' al (2017). It contains 333 tsDHS-DMCs of 7 blood cell subtypes(You can select 
 #' the corresponding cell types existing in the dataset, which you would like to 
-#' estimate cell proportions, to use. Notice that Granulocytes consist of 
-#' Neutrophils and Eosinophils. \emph{So you should include either of Granulocytes 
-#' column or Neutrophils and Eosinophils columns.}):
+#' estimate cell proportions, to use. \emph{As the proportions of eosinophils 
+#' are usually small, you could add the estimated proportions of neutrophils and
+#'  eosinophils togetther as the estimations of granulocytes.}):
 #'
 #' \itemize{
 #'   \item B-cells
 #'   \item CD4+ T-cells
 #'   \item CD8+ T-cells 
 #'   \item NK-cells
-#'   \item Granulocytes
 #'   \item Monocytes
 #'   \item Neutrophils 
 #'   \item Eosinophils
@@ -26,7 +25,7 @@
 #' @keywords datasets
 #' @name centDHSbloodDMC.m
 #' @usage data(centDHSbloodDMC.m)
-#' @format A matrix with 333 rows and 8 columns
+#' @format A matrix with 333 rows and 7 columns
 #' @references 
 #' Teschendorff AE, Breeze CE, Zheng SC, Beck S. 
 #' \emph{A comparison of reference-based algorithms for correcting cell-type 

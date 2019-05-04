@@ -14,9 +14,9 @@ vignette: >
 
 # Introduction
 
-The **EpiDISH** package provides tools to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC[@EpiDISH], Cibersort (CBS)[@CBS], Constrained Projection (CP)[@CP]), as determined by user. Besides, we also provide a method - CellDMC that allows the identification of differentially methylated cell-types and their directionality of change.
+The **EpiDISH** package provides tools to infer the proportions of a priori known cell subtypes present in a sample representing a mixture of such cell-types. Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC[@EpiDISH], Cibersort (CBS)[@CBS], Constrained Projection (CP)[@CP]), as determined by the user. Besides, we also provide a method - CellDMC that allows the identification of differentially methylated cell-types and their directionality of change[@CellDMC].
 
-For now, the package contains 4 references, including two blood subtypes reference, as well as one reference with epithelial cells, fibroblasts, and total immune cells, and one reference with epithelial cells, fibroblasts, fat cells, and total immune cells, described in [@EpiDISH] and [@HEpiDISH].
+For now, the package contains 4 references, including two blood subtypes reference, as well as one generic epithelial reference with epithelial cells, fibroblasts, and total immune cells, and one reference for breast tissues, described in [@EpiDISH] and [@HEpiDISH].
 
 
 # How to estimte cell-type fractions using DNAm data
@@ -43,6 +43,20 @@ dim(out.l$dataREF)
 ```
 
 In quality control step, we might remove bad probes from all  probes on 450k or 850k array; consequently, not all probes in the reference can be found in inquiry data. By checking *ref* and *dataREF*, we can extract the probes used to infer the proportions. If most of the probes in the reference cannot be found, the estimated proportions might be compromised.
+
+And now we show example of using our package to estimate cell-type fractions of whole blood tissues. We use a subset beta value matrix of GSE42861 (detailed description in manaul page).
+
+```{r inferBlood, eval=TRUE, echo=T, message=FALSE, warning=FALSE}
+data(LiuDataSub.m)
+BloodFrac.m <- epidish(beta.m = LiuDataSub.m, ref.m = centDHSbloodDMC.m, method = "RPC")$estF
+```
+
+We can easily check the inferred fractions with boxplots.
+```{r boxplot, eval=TRUE, echo=T, message=FALSE, warning=FALSE, fig.height = 5, fig.width = 8, fig.align = "center"}
+boxplot(BloodFrac.m)
+```
+
+
 
 # How to estimte cell-type fractions in a two-step framework
 HEpiDISH is a iterative hierarchical procedure of EpiDISH. HEpiDISH uses two distinct DNAm references, a primary reference for the estimation of several cell-types fractions, and a separate secondary non-overlapping DNAm reference for the estimation of underlying subtype fractions of one of the cell-type in the primary reference.

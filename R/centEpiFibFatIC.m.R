@@ -1,7 +1,7 @@
-#' Reference for epithelial cells, fibroblasts, fat cells, and total immune cells
+#' Reference for breast tissue
 #'
-#' Similar to \code{centEpiFibIC.m}. But this referene contains centroids for
-#' epithelial cells, fibroblasts, fat cells, and total immune cells.
+#' This reference was designed for estimating proportions of epithelial 
+#' cells, fibroblasts, fat cells and total immune cells in breast tissues. 
 #'
 #' \itemize{
 #'   \item Epi

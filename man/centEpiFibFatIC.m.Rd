@@ -3,14 +3,14 @@
 \docType{data}
 \name{centEpiFibFatIC.m}
 \alias{centEpiFibFatIC.m}
-\title{Reference for epithelial cells, fibroblasts, fat cells, and total immune cells}
+\title{Reference for breast tissue}
 \format{A matrix with 491 rows and 4 columns}
 \usage{
 data(centEpiFibFatIC.m)
 }
 \description{
-Similar to \code{centEpiFibIC.m}. But this referene contains centroids for
-epithelial cells, fibroblasts, fat cells, and total immune cells.
+This reference was designed for estimating proportions of epithelial 
+cells, fibroblasts, fat cells and total immune cells in breast tissues.
 }
 \details{
 \itemize{

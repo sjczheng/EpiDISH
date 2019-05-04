@@ -4,7 +4,7 @@ test_that("# of columns in output should equal to that of reference", {
     
     data(centDHSbloodDMC.m)
     data(DummyBeta.m)
-    idx <- sample(1:8, sample(2:8, 1), replace = F)
+    idx <- sample(1:7, sample(2:7, 1), replace = FALSE)
     ref.m <- centDHSbloodDMC.m[, idx]
     estF.m <- epidish(DummyBeta.m, ref.m, method = "RPC")$estF
     

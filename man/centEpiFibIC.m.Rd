@@ -3,14 +3,14 @@
 \docType{data}
 \name{centEpiFibIC.m}
 \alias{centEpiFibIC.m}
-\title{Reference for epithelial cells, fibroblasts, and total immune cells}
+\title{Reference for genenric epithelial tissue}
 \format{A matrix with 716 rows and 3 columns}
 \usage{
 data(centEpiFibIC.m)
 }
 \description{
-Similar to \code{centDHSbloodDMC.m}. But this referene contains centroids for
-epithelial cells, fibroblasts, and total immune cells.
+This reference could be used to estimate pproportions of epithelial cells, 
+fibroblasts, and total immune cells in epithelial tissues.
 }
 \details{
 \itemize{

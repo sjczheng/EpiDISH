@@ -1,7 +1,7 @@
-#' Reference for epithelial cells, fibroblasts, and total immune cells
+#' Reference for genenric epithelial tissue
 #'
-#' Similar to \code{centDHSbloodDMC.m}. But this referene contains centroids for
-#' epithelial cells, fibroblasts, and total immune cells.
+#' This reference could be used to estimate pproportions of epithelial cells, 
+#' fibroblasts, and total immune cells in epithelial tissues.
 #'
 #' \itemize{
 #'   \item Epi

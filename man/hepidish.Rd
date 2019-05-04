@@ -14,14 +14,14 @@ as in cent.m) and columns labeling samples (e.g. primary tumour specimens).
 No missing values are allowed and all values should be positive or zero. 
 In the case of DNA methylation, these are beta-values.}
 
-\item{ref1.m}{A matrix of \strong{primary}reference 'centroids', i.e. representative molecular profiles, 
+\item{ref1.m}{A matrix of \strong{primary} reference 'centroids', i.e. representative molecular profiles, 
 for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) 
 and columns label the cell-type. IDs need to be provided as rownames and 
 colnames, respectively. No missing values are allowed, and all values in 
 this matrix should be positive or zero. For DNAm data, values should be 
 beta-values.}
 
-\item{ref2.m}{Similar to \code{ref1.m}, but now a A matrix of \strong{secondary}reference.
+\item{ref2.m}{Similar to \code{ref1.m}, but now a A matrix of \strong{secondary} reference.
 For example, \code{ref1.m} contains reference centroids for epithelial cells,
 fibroblasts and total immune cells. \code{ref2.m} can be subtypes of immune
 cells, such as B-cells, NK cells, monocytes and etc.}
