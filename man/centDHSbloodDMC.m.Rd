@@ -9,16 +9,15 @@
 data(centDHSbloodDMC.m)
 }
 \description{
-Reference-based cell proportions estimation algorithms rely on a prior 
+Reference-based cell-type fraction estimation algorithms rely on a prior 
 defined reference matrix. We leveraged cell-type specific DNAse Hypersensitive 
 Site (DHS) information from the NIH Epigenomics Roadmap, and used 450k purified 
 blood cell types dataset from Reinius et al (2012) to  construct this 
-improved reference DNA methylation dataset, as described in Teschendorff et 
-al (2017). It contains 333 tsDHS-DMCs of 7 blood cell subtypes(You can select 
-the corresponding cell types existing in the dataset, which you would like to 
-estimate cell proportions, to use. \emph{As the proportions of eosinophils 
-are usually small, you could add the estimated proportions of neutrophils and
- eosinophils togetther as the estimations of granulocytes.}):
+improved whole blood reference DNA methylation dataset, as described in 
+Teschendorff et al (2017). It contains 333 tsDHS-DMCs of 7 blood cell 
+subtypes(\emph{As the fractions of eosinophils are usually small, you could 
+add the estimated fractions of neutrophils and eosinophils togetther as the 
+estimations of granulocytes.}):
 }
 \details{
 \itemize{

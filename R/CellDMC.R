@@ -1,5 +1,5 @@
-#' @title A method that allows the identification of differentially methylated 
-#' cell-types and the estimated change of each cell-type
+#' @title A function that allows the identification of differentially methylated 
+#' cell-types in in Epigenome-Wide Association Studies(EWAS)
 #' 
 #' @aliases CellDMC
 #' 
@@ -27,13 +27,14 @@
 #' rowSums of frac.m should be 1 or close to 1.
 #' 
 #' @param adjPMethod
-#' The method will be used to adjust p values. The method can be any of method
+#' The method used to adjust p values. The method can be any of method
 #'  accepted by \code{\link{p.adjust}}.
 #' 
 #' @param adjPThresh
-#' A numeric value, default as 0.05. This is used to call significant DMCTs. 
-#' Adjusted p values less than this threshold will be reported as DMCTs (-1 or
-#'  1) in the 'dmct' matrix in the returned list.
+#' A numeric value, default as 0.05. This is used to call DMCTs. 
+#' For each cell-type respectively, the CpG with the adjusted p values less than
+#'  this threshold will be reported as DMCTs (-1 or 1) in the 'dmct' matrix in 
+#'  the returned list.
 #' 
 #' @param cov.mod
 #' A design matrix from \code{model.matrix}, which contains other covariates to
@@ -53,16 +54,16 @@
 #' @return A list with the following two items. 
 #' 
 #' @return dmct
-#' A matrix givess wheter the input CpGs are DMCTs and DMCs. The first column 
-#' gives whether a CpG is DMC or not. If the CpG is called as DMC, the value 
+#' A matrix gives wheter the input CpGs are DMCTs and DMCs. The first column 
+#' tells whether a CpG is a DMC or not. If the CpG is called as DMC, the value 
 #' will be 1, otherwise it is 0. The following columns give DMCTs for each 
-#' cell-types. If a CpG is a DMCT, the value will be 1 (hypermethylated for case 
+#' cell-type. If a CpG is a DMCT, the value will be 1 (hypermethylated for case 
 #' compared to control) or -1 (hypomethylated for case compared to control). 
 #' Otherwise, the value is 0 (non-DMCT). The rows of this matrix are ordered as
-#' the same as input \code{beta.m}. 
+#' the same as that of the input \code{beta.m}. 
 #' 
 #' @return coe
-#' This list contains several dataframes, which correspond to each cel-type in
+#' This list contains several dataframes, which correspond to each cell-type in
 #'  \code{frac.m}. Each dataframe contains all CpGs in input \code{beta.m}. 
 #'  All dataframes contain estimated DNAm changes (\code{Estimate}), 
 #'  standard error (\code{SE}), estimated t statistics (\code{t}), 

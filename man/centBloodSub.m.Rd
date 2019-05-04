@@ -9,10 +9,12 @@
 data(centBloodSub.m)
 }
 \description{
-This reference is a subset of \code{centDHSbloodDMC.m}. This referencen contains 188 
-DMCs which exhibit similar median DNAm values across epithelial, fibroblast 
-and ICs to ensure that the estimation of IC subtype fractions is not 
-confounded by the epithelial and fibroblast cells in the sample.
+This reference is a subset of \code{centDHSbloodDMC.m}, and contains 188 
+DMCs which exhibit similar median DNAm values across epithelial cells, 
+fibroblasts and ICs to ensure that the estimation of IC subtype fractions is 
+not confounded by the epithelial and fibroblast cells in the sample. It should 
+be used in the \code{hepidish} function to estimate fractions of immunce cell 
+ subtypes.
 }
 \details{
 \itemize{

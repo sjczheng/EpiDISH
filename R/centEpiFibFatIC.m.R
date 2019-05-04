@@ -1,7 +1,7 @@
 #' Reference for breast tissue
 #'
-#' This reference was designed for estimating proportions of epithelial 
-#' cells, fibroblasts, fat cells and total immune cells in breast tissues. 
+#' This reference was designed for estimating fractions of epithelial 
+#' cells, fibroblasts, fat cells and total immune cells in breast tissue. 
 #'
 #' \itemize{
 #'   \item Epi

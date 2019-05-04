@@ -4,23 +4,23 @@
 #' @aliases epidish
 #'  
 #' @description 
-#' A reference-based function to infer the proportions of a priori known cell 
+#' A reference-based function to infer the fractions of a priori known cell 
 #' subtypes present in a sample representing a mixture of such cell-types. 
 #' Inference proceeds via one of 3 methods (Robust Partial Correlations-RPC, 
-#' Cibersort (CBS), Constrained Projection (CP)), as determined by user.
+#' Cibersort-CBS, Constrained Projection-CP), as determined by the user.
 #' 
 #' 
 #' @param beta.m
 #' A data matrix with rows labeling the molecular features (should use same ID 
-#' as in cent.m) and columns labeling samples (e.g. primary tumour specimens). 
-#' No missing values are allowed and all values should be positive or zero. 
+#' as in ref.m) and columns labeling samples (e.g. primary tumour specimens). 
+#' Missing value is not allowed and all values should be positive or zero. 
 #' In the case of DNA methylation, these are beta-values.
 #' 
 #' @param ref.m
 #' A matrix of reference 'centroids', i.e. representative molecular profiles, 
 #' for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) 
 #' and columns label the cell-type. IDs need to be provided as rownames and 
-#' colnames, respectively. No missing values are allowed, and all values in 
+#' colnames, respectively. Missing value is not allowed, and all values in 
 #' this matrix should be positive or zero. For DNAm data, values should be 
 #' beta-values.
 #' 
@@ -28,36 +28,37 @@
 #' Chioce of a reference-based method ('RPC','CBS','CP')
 #' 
 #' @param maxit
-#' Used in RPC mode, the limit on the number of IWLS iterations
+#' Only used in RPC mode, the limit of the number of IWLS iterations
 #' 
 #' @param nu.v
-#' This is only used for CBS mode. It is a vector of several nv values. nu is 
+#' Only used in CBS mode. It is a vector of several candidate nu values. nu is 
 #' parameter needed for nu-classification, nu-regression, and 
-#' one-classification in svm
+#' one-classification in svm. The best estimation results among all candidate nu 
+#' will be automatically returned.
 #' 
 #' @param constraint
-#' For CP mode, you can choose either of 'inequality' or 'equality' 
+#' Only used in CP mode, you can choose either of 'inequality' or 'equality' 
 #' normalization constraint. The default is 'inequality' (i.e sum of weights 
 #' adds to a number less or equal than 1), which was implemented in 
 #' Houseman et al (2012).
 #' 
 #' @return CP-mode
-#' A list with the following entries: estF: the estimated cell fraction matrix; 
-#' ref: the reference centroid matrix used; dataREF: the input data matrix over 
-#' the probes defined in the reference matrix.
+#' A list with the following entries: estF: a matrix of the estimated fractions; 
+#' ref: the reference centroid matrix used; dataREF: the subset of the input 
+#' data matrix with only the probes defined in the reference matrix.
 #' 
 #' @return CBS-mode
-#' A list with the following entries: estF: the estimated cell fraction matrix; 
+#' A list with the following entries: estF: a matrix of the estimated fractions; 
 #' nu: a vector of 'best' nu-parameter for each sample; 
 #' ref: the reference centroid matrix used;
-#' dataREF: the input data matrix over the probes defined in the reference 
-#' matrix.
+#' dataREF: the subset of the input data matrix with only the probes defined in the 
+#' reference matrix.
 #' 
 #' @return RPC-mode
-#' A list with the following entries: estF: the estimated cell fraction 
-#' matrix; ref: the reference centroid matrix used; 
-#' dataREF: the input data matrix over the probes defined in the reference 
-#' matrix.
+#' A list with the following entries: estF: a matrix of the estimated fractions;
+#'  ref: the reference centroid matrix used; 
+#' dataREF: the subset of the input data matrix with only the probes defined in the 
+#' reference matrix.
 #' 
 #' @references 
 #' Teschendorff AE, Breeze CE, Zheng SC, Beck S. 

@@ -4,7 +4,7 @@
 #' @aliases hepidish
 #'  
 #' @description 
-#' HEpiDISH is a iterative hierarchical procedure of EpiDISH. HEpiDISH uses two 
+#' HEpiDISH is an iterative hierarchical procedure of EpiDISH. HEpiDISH uses two 
 #' distinct DNAm references, a primary reference for the estimation of several 
 #' cell-types fractions, and a separate secondary non-overlapping DNAm reference 
 #' for the estimation of underlying subtype fractions of one of the cell-type in 
@@ -13,15 +13,15 @@
 #' 
 #' @param beta.m
 #' A data matrix with rows labeling the molecular features (should use same ID 
-#' as in cent.m) and columns labeling samples (e.g. primary tumour specimens). 
-#' No missing values are allowed and all values should be positive or zero. 
+#' as in reference matrices) and columns labeling samples (e.g. primary tumour specimens). 
+#' Missing value is not allowed and all values should be positive or zero. 
 #' In the case of DNA methylation, these are beta-values.
 #' 
 #' @param ref1.m
 #' A matrix of \strong{primary} reference 'centroids', i.e. representative molecular profiles, 
 #' for a number of cell subtypes. rows label molecular features (e.g. CpGs,...) 
 #' and columns label the cell-type. IDs need to be provided as rownames and 
-#' colnames, respectively. No missing values are allowed, and all values in 
+#' colnames, respectively. Missing value is not allowed, and all values in 
 #' this matrix should be positive or zero. For DNAm data, values should be 
 #' beta-values.
 #' 
@@ -43,20 +43,21 @@
 #' Chioce of a reference-based method ('RPC','CBS','CP')
 #' 
 #' @param maxit
-#' Used in RPC mode, the limit on the number of IWLS iterations
+#' Only used in RPC mode, the limit of the number of IWLS iterations
 #' 
 #' @param nu.v
-#' This is only used for CBS mode. It is a vector of several nv values. nu is 
+#' Only used in CBS mode. It is a vector of several candidate nu values. nu is 
 #' parameter needed for nu-classification, nu-regression, and 
-#' one-classification in svm
+#' one-classification in svm. The best estimation results among all candidate nu 
+#' will be automatically returned.
 #' 
 #' @param constraint
-#' For CP mode, you can choose either of 'inequality' or 'equality' 
+#' Only used in CP mode, you can choose either of 'inequality' or 'equality' 
 #' normalization constraint. The default is 'inequality' (i.e sum of weights 
 #' adds to a number less or equal than 1), which was implemented in 
 #' Houseman et al (2012).
 #' 
-#' @return the estimated cell fraction matrix
+#' @return A matrix of the estimated fractions
 #' 
 #' 
 #' @references 
