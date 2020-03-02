@@ -4,9 +4,16 @@
 \alias{hepidish}
 \title{Hierarchical EpiDISH (HEpiDISH)}
 \usage{
-hepidish(beta.m, ref1.m, ref2.m, h.CT.idx, method = c("RPC", "CBS",
-  "CP"), maxit = 50, nu.v = c(0.25, 0.5, 0.75),
-  constraint = c("inequality", "equality"))
+hepidish(
+  beta.m,
+  ref1.m,
+  ref2.m,
+  h.CT.idx,
+  method = c("RPC", "CBS", "CP"),
+  maxit = 50,
+  nu.v = c(0.25, 0.5, 0.75),
+  constraint = c("inequality", "equality")
+)
 }
 \arguments{
 \item{beta.m}{A data matrix with rows labeling the molecular features (should use same ID 

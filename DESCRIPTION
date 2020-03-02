@@ -1,6 +1,6 @@
 Package: EpiDISH
 Title: Epigenetic Dissection of Intra-Sample-Heterogeneity
-Version: 2.2.0
+Version: 2.2.1
 Description: EpiDISH is a R package to infer the proportions of a
         priori known cell-types present in a sample representing a
         mixture of such cell-types. Right now, the package can be used on DNAm 
@@ -13,13 +13,13 @@ Author: Andrew E. Teschendorff <a.teschendorff@ucl.ac.uk>, Shijie C.
         Zheng<shijieczheng@gmail.com>
 Maintainer: Shijie Charles Zheng<shijieczheng@gmail.com>
 Depends: R (>= 3.5)
-Imports: MASS, e1071, quadprog, parallel, stats, matrixStats, stringr
+Imports: MASS, e1071, quadprog, parallel, stats, matrixStats, stringr, locfdr
 Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase,
         testthat
 VignetteBuilder: knitr
 License: GPL-2
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 URL: https://github.com/sjczheng/EpiDISH
 BugReports: https://github.com/sjczheng/EpiDISH/issues
 biocViews: DNAMethylation, MethylationArray, Epigenetics,
