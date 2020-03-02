@@ -4,8 +4,14 @@
 \alias{epidish}
 \title{Epigenetic Dissection of Intra-Sample-Heterogeneity}
 \usage{
-epidish(beta.m, ref.m, method = c("RPC", "CBS", "CP"), maxit = 50,
-  nu.v = c(0.25, 0.5, 0.75), constraint = c("inequality", "equality"))
+epidish(
+  beta.m,
+  ref.m,
+  method = c("RPC", "CBS", "CP"),
+  maxit = 50,
+  nu.v = c(0.25, 0.5, 0.75),
+  constraint = c("inequality", "equality")
+)
 }
 \arguments{
 \item{beta.m}{A data matrix with rows labeling the molecular features (should use same ID 

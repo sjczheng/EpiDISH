@@ -5,8 +5,16 @@
 \title{A function that allows the identification of differentially methylated 
 cell-types in in Epigenome-Wide Association Studies(EWAS)}
 \usage{
-CellDMC(beta.m, pheno.v, frac.m, adjPMethod = "fdr", adjPThresh = 0.05,
-  cov.mod = NULL, sort = FALSE, mc.cores = 1)
+CellDMC(
+  beta.m,
+  pheno.v,
+  frac.m,
+  adjPMethod = "fdr",
+  adjPThresh = 0.05,
+  cov.mod = NULL,
+  sort = FALSE,
+  mc.cores = 1
+)
 }
 \arguments{
 \item{beta.m}{A beta value matrix with rows labeling the CpGs and columns labeling 
