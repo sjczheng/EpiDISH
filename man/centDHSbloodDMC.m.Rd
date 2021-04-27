@@ -4,7 +4,9 @@
 \name{centDHSbloodDMC.m}
 \alias{centDHSbloodDMC.m}
 \title{Whole blood reference of 333 tsDHS-DMCs and 7 blood cell subtypes}
-\format{A matrix with 333 rows and 7 columns}
+\format{
+A matrix with 333 rows and 7 columns
+}
 \usage{
 data(centDHSbloodDMC.m)
 }

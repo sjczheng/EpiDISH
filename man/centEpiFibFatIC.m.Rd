@@ -4,7 +4,9 @@
 \name{centEpiFibFatIC.m}
 \alias{centEpiFibFatIC.m}
 \title{Reference for breast tissue}
-\format{A matrix with 491 rows and 4 columns}
+\format{
+A matrix with 491 rows and 4 columns
+}
 \usage{
 data(centEpiFibFatIC.m)
 }

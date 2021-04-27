@@ -4,7 +4,9 @@
 \name{centBloodSub.m}
 \alias{centBloodSub.m}
 \title{Whole blood reference of 188 tsDHS-DMCs and 7 blood cell subtypes}
-\format{A matrix with 188 rows and 7 columns}
+\format{
+A matrix with 188 rows and 7 columns
+}
 \usage{
 data(centBloodSub.m)
 }
