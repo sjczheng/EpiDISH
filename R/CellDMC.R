@@ -90,8 +90,9 @@
 #' 
 #' @import matrixStats
 #' @import parallel
-#' @importFrom stringr str_c
 #' @import stats
+#' @importFrom stringr str_c
+#' @importFrom Matrix rankMatrix
 #' 
 #' @export
 #' 
@@ -120,6 +121,12 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
 
   ### Fit model
   design <- model.matrix(~ frac.m + pheno.v:frac.m)[, -1]
+  if (Matrix::rankMatrix(design) < ncol(design)) {
+    stop("The design matrix is not full ranked.\nThis means that you coundn't make inference for all cell-types in your fraction matrix.
+         This is usally casued by fractions of a cell-type of one pheno type are all 0 or some fractions in one pheno type are paralle to that of another cell-type.
+         You might use which(colSums(model.matrix(~ frac.m + pheno.v:frac.m)[, -1]) == 0) to find the cell type.")
+  }
+  
   if (!is.null(cov.mod)) design <- cbind(design, cov.mod[, -1])
   IntNames.v <- str_c(colnames(frac.m), "Pheno")
   colnames(design)[(1 + ncol(frac.m)):(2*ncol(frac.m))] <- IntNames.v 

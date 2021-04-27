@@ -4,7 +4,9 @@
 \name{LiuDataSub.m}
 \alias{LiuDataSub.m}
 \title{Whole blood example beta value matrix}
-\format{A matrix with 500 CpGs and 50 columns}
+\format{
+A matrix with 500 CpGs and 50 columns
+}
 \usage{
 data(LiuDataSub.m)
 }

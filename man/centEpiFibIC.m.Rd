@@ -4,7 +4,9 @@
 \name{centEpiFibIC.m}
 \alias{centEpiFibIC.m}
 \title{Reference for genenric epithelial tissue}
-\format{A matrix with 716 rows and 3 columns}
+\format{
+A matrix with 716 rows and 3 columns
+}
 \usage{
 data(centEpiFibIC.m)
 }

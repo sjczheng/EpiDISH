@@ -4,7 +4,9 @@
 \name{DummyBeta.m}
 \alias{DummyBeta.m}
 \title{Dummy beta value matrix}
-\format{A matrix with 2000 CpGs and 10 columns}
+\format{
+A matrix with 2000 CpGs and 10 columns
+}
 \usage{
 data(DummyBeta.m)
 }
