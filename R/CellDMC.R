@@ -136,7 +136,7 @@ CellDMC <- function(beta.m, pheno.v, frac.m,
   allCoe.m <- do.call(rbind, mclapply(seq_len(nrow(beta.m)), function(i) {
       beta.v <- beta.m[i, ]
       ### model
-      Int.o <- lm(beta.v ~ ., data = data.frame(design))
+      Int.o <- lm(beta.v ~ .-1, data = data.frame(design))
     
       ### get coe
       IntCoe.m <- summary(Int.o)$coe[IntNames.v, ]
