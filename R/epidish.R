@@ -116,7 +116,7 @@ epidish <- function(beta.m, ref.m, method = c("RPC", "CBS", "CP"), maxit = 50, n
 DoRPC <- function(beta.m, ref.m, maxit) {
     map.idx <- match(rownames(ref.m), rownames(beta.m))
     rep.idx <- which(is.na(map.idx) == FALSE)
-    data2.m <- beta.m[map.idx[rep.idx], ]
+    data2.m <- beta.m[map.idx[rep.idx], , drop = FALSE]
     ref2.m <- ref.m[rep.idx, ]
     est.m <- matrix(nrow = ncol(data2.m), ncol = ncol(ref2.m))
     colnames(est.m) <- colnames(ref2.m)
@@ -138,7 +138,7 @@ DoCBS <- function(beta.m, ref.m, nu.v) {
     map.idx <- match(rownames(ref.m), rownames(beta.m))
     rep.idx <- which(is.na(map.idx) == FALSE)
     
-    data2.m <- beta.m[map.idx[rep.idx], ]
+    data2.m <- beta.m[map.idx[rep.idx], , drop = FALSE]
     ref2.m <- ref.m[rep.idx, ]
     
     est.lm <- list()
@@ -165,7 +165,7 @@ DoCBS <- function(beta.m, ref.m, nu.v) {
     for (nui in seq_along(nu.v)) {
         reconst.m <- ref2.m %*% t(est.lm[[nui]])
         s <- seq_len(ncol(beta.m))
-        rmse.m[s, nui] <- sqrt(colMeans((data2.m[, s] - reconst.m[, s])^2))
+        rmse.m[s, nui] <- sqrt(colMeans((data2.m[, s, drop = FALSE] - reconst.m[, s, drop = FALSE])^2))
         message(nui)
     }
     colnames(rmse.m) <- nu.v
