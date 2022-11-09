@@ -1,4 +1,3 @@
-
 citHeader("Please cite the relevant papers for individual methods and the EpiDISH paper for the whole package.")
 
 citEntry(
