@@ -1,0 +1,6 @@
+Changes in version 2.26.1 (2026-02-04)
+--------------------------------------
+
+New features
+
+    * Added a new function ConstructDNAMPanel to support custom DNA methylation panel construction.
