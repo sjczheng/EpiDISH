@@ -13,7 +13,7 @@ Authors@R: c(person("Andrew E.", "Teschendorff", role=c("aut"), email="andrew@pi
         person("Shijie C.", "Zheng", role=c("aut", "cre"), email="shijieczheng@gmail.com"))
 Depends: R (>= 4.1)
 Imports: MASS, e1071, quadprog, parallel, stats, matrixStats, stringr,
-        locfdr, Matrix
+        locfdr, Matrix, genefilter
 Suggests: roxygen2, GEOquery, BiocStyle, knitr, rmarkdown, Biobase,
         testthat
 VignetteBuilder: knitr
