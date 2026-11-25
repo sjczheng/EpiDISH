@@ -3,6 +3,8 @@
 export(CellDMC)
 export(ConstructDNAmPanel)
 export(DoMetaEfron)
+export(calculate_EMTS)
+export(calculate_mFDI)
 export(epidish)
 export(hepidish)
 import(locfdr)

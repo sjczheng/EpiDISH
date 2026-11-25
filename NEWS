@@ -1,3 +1,10 @@
+Changes in version 2.28.0
+------------------------
+
+    * Added three pan-tissue DNA methylation reference matrices for eight cell types.
+    * Added calculate_mFDI() and calculate_EMTS() for extrinsic mFDI and
+      cell-intrinsic EpiEMT scoring, respectively.
+
 Changes in version 2.27.1 (2026-02-04)
 --------------------------------------
 

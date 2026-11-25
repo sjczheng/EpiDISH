@@ -70,6 +70,22 @@ dim(out.l$dataREF)
 Note: As part of the quality control step in DNAm data preprocessing, we might have to remove bad probes; consequently, not all probes in the reference matrix may be available in a given dataset. By checking *ref* and *dataREF*, we can extract the probes actually used for estimating cell-type fractions. As shown by us [@HEpiDISH], if the proportion of missing reference matrix probes is more than a third, then estimated fractions may be unreliable. 
 
 
+# How to use the eight-cell-type pan-tissue references
+
+Use `pantissue8CTepic2.m` for EPIC v2 or `pantissue8CTmsa.m` for MSA arrays. The `pantissue8CT.m`
+matrix is for Illumina 450K and EPIC v1 arrays.
+
+```{r pantissue-reference, eval=FALSE}
+data(pantissue8CTepic2.m, package = "EpiDISH")
+fit <- epidish(beta.m = epic2_beta.m, ref.m = pantissue8CTepic2.m)
+fit$estF
+calculate_mFDI(fit)
+```
+
+The extrinsic mFDI uses the estimated fibroblast and epithelial
+fractions. The cell-intrinsic EpiEMT score is computed from a cohort
+beta matrix using `calculate_EMTS(beta.m)`.
+
 # How to estimate immune cell-type fractions in a solid tissue using HEpiDISH
 HEpiDISH is an iterative hierarchical procedure of EpiDISH designed for solid tissues with significant immune-cell infiltration. HEpiDISH uses two distinct DNAm references, a primary reference for the estimation of total epithelial, fibroblast and immune-cell fractions, and a separate secondary non-overlapping DNAm reference for the estimation of underlying immune cell subtype fractions. 
 ![Fig1. HEpiDISH workflow](HEpiDISH.jpg) 
